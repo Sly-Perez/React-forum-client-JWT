@@ -1,0 +1,8 @@
+.like-dislike-icon{
+    padding: 0.063rem 0.313rem;
+    transition: 0.2s all ease-in;
+}
+.like-dislike-icon:hover{
+    background-color: #dedede;
+    border-radius: 1rem;
+}

@@ -1,0 +1,119 @@
+.nav-bar{
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    ul{
+        margin: 0;
+    
+        li{
+            list-style: none;
+            font-size: 1.25rem;
+    
+            a{
+                color: #000;
+                transition: all ease-in 0.4s;
+            }
+            a:hover{
+                background-color: #000;
+                color: #fff;
+            }
+        }
+    }
+}
+ul li{
+    list-style: none;
+}
+.navbar-regular-options{
+    li{
+        border: solid 0.188rem transparent;
+    }
+}
+
+.wt-custom-animation{
+    background-color: #000;
+    animation: wt-custom-animation 0.4s infinite;
+}
+.wt-custom-animation:hover{
+    border: 0.188rem solid transparent;
+}
+
+@keyframes wt-custom-animation{
+    0% {
+        border-top: 0.188rem solid green;
+        border-bottom: 0.188rem solid #239;
+        border-right: 0.188rem solid #bb5;
+        border-left: 0.188rem solid red;
+        color: aqua;
+    }
+    25%{
+        border-top: 0.188rem solid red;
+        border-bottom: 0.188rem solid #bb5;
+        border-right: 0.188rem solid green;
+        border-left: 0.188rem solid #239;
+        color: #fff;
+    }
+    50% {
+        border-top: 0.188rem solid #239;
+        border-bottom: 0.188rem solid green;
+        border-right: 0.188rem solid red;
+        border-left: 0.188rem solid #bb5;
+        color: aqua;
+    }
+    75%{
+        border-top: 0.188rem solid #bb5;
+        border-bottom: 0.188rem solid red;
+        border-right: 0.188rem solid #239;
+        border-left: 0.188rem solid green;
+        color: #fff;
+    }
+    100% {
+        border-top: 0.188rem solid green;
+        border-bottom: 0.188rem solid #239;
+        border-right: 0.188rem solid #bb5;
+        border-left: 0.188rem solid red;
+        color: #fff;
+    }
+}
+
+/*Alternative nav-bar*/
+.alternative-nav-bar{
+    animation: alternative-nav-bar-color-animation 1s infinite;
+    border-bottom: 1px solid transparent;
+    
+    ul{
+        margin: 0;
+    
+        li{
+            list-style: none;
+            font-size: 1.25rem;
+    
+            a{
+                color: #000;
+                transition: all ease-in 0.4s;
+            }
+            a:hover{
+                background-color: #000;
+                color: #fff;
+            }
+        }
+    }
+}
+@keyframes alternative-nav-bar-color-animation{
+    0% {
+        background-color: green;
+    }
+    25%{
+        background-color: red;
+        color: #fff;
+    }
+    50% {
+        background-color: #239;
+    }
+    75%{
+        background-color: #bb5;
+        color: #fff;
+    }
+    100% {
+        background-color: green;
+        color: #fff;
+    }
+}

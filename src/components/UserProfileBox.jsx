@@ -1,0 +1,117 @@
+import { useNavigate } from 'react-router-dom';
+import './UserProfileBox.css';
+import { ApiDomain } from '../data/ApiDomain';
+import { useState } from 'react';
+
+const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, isDeleteButtonActive = false, userIsAdmin = false}) => {
+
+    const navigate = useNavigate();
+    const token = localStorage.getItem("sessionToken") || "";
+
+    const [errorsList, setErrorsList] = useState([]);
+
+    const deleteProfile = async(id)=>{
+        const apiUrl = userIsAdmin
+                        ? `${ApiDomain}/users/${id}`
+                        : `${ApiDomain}/users/my/profile`;
+
+        try{
+
+            const data = await fetch(apiUrl, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+            
+            const response = await data.json();
+
+            if(data.status === 200){
+                navigate("/home");
+                return;
+            }
+            
+            const message = await response.errors;
+            setErrorsList(message);
+
+            
+        }
+        catch (error) {
+            console.error("Error uploading data:", error);
+        }
+    }
+
+    return (
+        <>
+        {
+            (errorsList.length > 0)
+            ?
+            <ul className="d-flex flex-column alert-box py-20 px-20 m-0">
+                {
+                    errorsList.map((item, index)=>(
+                        <li className="f-size-14 list-style-circle" key={index}>{item}</li>
+                    ))
+                }
+            </ul>
+            :
+            null
+        }
+        <article className={`user-profile-box d-flex flex-row ${(errors.length === 0) ? "" : "justify-content-center align-items-center"} gap-10 w-60-percent px-20 py-20 my-20 gap-10`}>
+
+                {
+                    (errors.length > 0)
+                    ? 
+                        <div className="movie-poster py-20 px-20 text-center">
+                            { 
+                                errors.map((item, index)=>(
+                                    <p className="mb-10" key={index}>Whoops! {item} </p>
+                                ))
+                            }
+                        </div>
+                    : 
+                    <>
+                        <div className="user-profile-picture w-25-percent">
+                            <img className="w-90-percent img-fluid" src={userPicture} alt={`${user.username}'s picture`}/>
+                        </div>
+                        <div className="user-profile-information d-flex flex-column gap-10">
+                            <div className="d-flex flex-column">
+                                <h2>Username: </h2>
+                                <span className="f-size-22">{user.username}</span>
+                            </div>
+                            <div className="d-flex flex-column">
+                                <h2>Joined at: </h2>
+                                <span className="f-size-22">{user.joinedAt}</span>
+                            </div>
+                            <div className="d-flex flex-column">
+                                <h2>Amount of posts: </h2>
+                                <span className="f-size-22">{user.amountOfPosts}</span>
+                            </div>
+                            <div className="d-flex flex-row gap-10">
+                                {
+                                    isEditButtonActive
+                                    ?
+                                    <button className="pagination-item w-fit-content cursor-pointer px-20 py-10" onClick={()=>navigate("/my/settings")}>
+                                        Edit
+                                    </button>
+                                    :
+                                    null
+                                }
+                                {
+                                    isDeleteButtonActive
+                                    ?
+                                    <button className="white-to-dark-red-btn squared-border cursor-pointer" onClick={()=>deleteProfile(user.userId)}>
+                                        Delete
+                                    </button>
+                                    :
+                                    null
+                                }
+                            </div>
+                        </div>
+                    </>
+                }
+        </article>
+        </>
+    )
+}
+
+export default UserProfileBox;

@@ -1,0 +1,7 @@
+.more-comments-icon{
+    transition: 0.2s all ease-in;
+}
+.more-comments-icon:hover{
+    background-color: rgb(205, 177, 231);
+    border-radius: 1rem;
+}
