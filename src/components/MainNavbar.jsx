@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { preventDefaultEvent } from '../utils/PreventDefaultEvent';
 import { ApiDomain } from '../data/ApiDomain';
 
+import Spinner from "./Spinner";
 
 const MainNavbar = () => {
 
@@ -16,6 +17,8 @@ const MainNavbar = () => {
 
     const [user, setUser] = useState([]);
     const [userPicture, setUserPicture] = useState(null);
+
+    const [isLoading, setIsLoading] = useState(true);
 
     const token = localStorage.getItem("sessionToken") || "";
     
@@ -76,6 +79,7 @@ const MainNavbar = () => {
                 const blob = await data.blob();
                 const url = URL.createObjectURL(blob);
                 setUserPicture(url);
+                setIsLoading(false);
             }
         }
         catch (error) {
@@ -141,24 +145,31 @@ const MainNavbar = () => {
                             ))
                         }
                     </ul>
-                    <div className="dropdown-list" ref={dropdownRef}>
-                        <Link to="" className="d-flex flex-row align-items-center user-nav-bar-option mx-15 gap-10" onClick={(event)=>toggleDropdownIsActive(event)}>
-                            <span>{user.username}</span>
-                            <img className="img-fluid icon-sized-img circle-like-border" src={userPicture} alt={`${user.username}'s picture`}/>
-                        </Link>
-                        <ul className={`d-flex flex-column dropdown-list-content ${dropdownIsActive ? "" : "d-none"} gap-10 p-15`}>
-                            <li className="pt-5">
-                                <Link to={`/users/profile/${user.userId}`}>
-                                    Profile
-                                </Link>
-                            </li> 
-                            <li className="border-top-1 pt-5" onClick={(event)=>logout(event)}>
-                                <Link to="">
-                                    Log out
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
+                    
+                    {
+                        isLoading
+                        ?
+                        < Spinner sizeLevel={2}/>
+                        :
+                        <div className="dropdown-list" ref={dropdownRef}>
+                            <Link to="" className="d-flex flex-row align-items-center user-nav-bar-option mx-15 gap-10" onClick={(event)=>toggleDropdownIsActive(event)}>
+                                <span>{user.username}</span>
+                                <img className="img-fluid icon-sized-img circle-like-border" src={userPicture} alt={`${user.username}'s picture`}/>
+                            </Link>
+                            <ul className={`d-flex flex-column dropdown-list-content ${dropdownIsActive ? "" : "d-none"} gap-10 p-15`}>
+                                <li className="pt-5">
+                                    <Link to={`/users/profile/${user.userId}`}>
+                                        Profile
+                                    </Link>
+                                </li> 
+                                <li className="border-top-1 pt-5" onClick={(event)=>logout(event)}>
+                                    <Link to="">
+                                        Log out
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    }
 
                 </div>
             </nav>
