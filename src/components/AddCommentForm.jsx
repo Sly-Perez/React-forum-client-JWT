@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ApiDomain } from "../data/ApiDomain";
+import Spinner from "./Spinner";
 
 const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideAddCommentForm, postId, responseTo = null, index = null, onCommentSubmit}) => {
 
@@ -12,6 +13,8 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
 
     const [commentDescription, setCommentDescription] = useState("");
     const [commentPictures, setCommentPictures] = useState([]);
+
+    const [isLoading, setIsLoading] = useState(true);
 
     const token = localStorage.getItem("sessionToken") || "";
     const [fileInputId, setFileInputId] = useState("");
@@ -59,6 +62,7 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
                 const blob = await data.blob();
                 const url = URL.createObjectURL(blob);
                 setUserPicture(url);
+                setIsLoading(false);
             }
         }
         catch (error) {
@@ -192,34 +196,40 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
                 }
 
                 <div className="add-comment-box">
-                    <form className="d-flex flex-row gap-10 align-items-center" action="" onSubmit={(event)=>submitForm(event)}>
+                    {
+                        isLoading
+                        ?
+                        < Spinner />
+                        :
+                        <form className="d-flex flex-row gap-10 align-items-center" action="" onSubmit={(event)=>submitForm(event)}>
 
-                        <div className="d-flex flex-row gap-10 align-items-center w-70-percent">
-                            <Link className="add-comment-user-picture" to={`/users/profile/${user.userId}`}>
-                                <img className="img-fluid icon-sized-img circle-like-border" src={userPicture} alt={`${user.username}'s profile picture`} />
+                            <div className="d-flex flex-row gap-10 align-items-center w-70-percent">
+                                <Link className="add-comment-user-picture" to={`/users/profile/${user.userId}`}>
+                                    <img className="img-fluid icon-sized-img circle-like-border" src={userPicture} alt={`${user.username}'s profile picture`} />
+                                </Link>
+                                <div className="w-100-percent">
+                                    <textarea className="w-90-percent resize-none search-var-input transition-all-ease-in-5ms" 
+                                        rows="2" minLength="1" maxLength="300" placeholder="Add a comment..."
+                                        value={commentDescription} onChange={(event)=>setCommentDescription(event.target.value)} onKeyUp={()=>handleCommentDescriptionKeyUp()}
+                                    />
+                                </div>
+                                <div className="add-comment-file-input-box">
+                                    <label htmlFor={fileInputId} className={`${addImgIconIsShown ? "" : "d-none"}`} >
+                                        <i className="fa-solid fa-images cursor-pointer pagination-item p-4" onClick={(event)=>handleClickOnAddImgIcon(event)}></i>
+                                    </label>
+                                    <input type="file" id={fileInputId} name="pictures[]"
+                                        className="d-none" accept=".gif, .jpeg, .jpg, .png, .webp" multiple
+                                        onChange={(event)=>handleCommentPictures(event)}
+                                    />
+                                </div>
+                            </div>
+
+                            <Link className="transparent-to-white-btn cancel-comment-button" onClick={(event)=>clearInputs(event)}>
+                                Cancel
                             </Link>
-                            <div className="w-100-percent">
-                                <textarea className="w-90-percent resize-none search-var-input transition-all-ease-in-5ms" 
-                                    rows="2" minLength="1" maxLength="300" placeholder="Add a comment..."
-                                    value={commentDescription} onChange={(event)=>setCommentDescription(event.target.value)} onKeyUp={()=>handleCommentDescriptionKeyUp()}
-                                />
-                            </div>
-                            <div className="add-comment-file-input-box">
-                                <label htmlFor={fileInputId} className={`${addImgIconIsShown ? "" : "d-none"}`} >
-                                    <i className="fa-solid fa-images cursor-pointer pagination-item p-4" onClick={(event)=>handleClickOnAddImgIcon(event)}></i>
-                                </label>
-                                <input type="file" id={fileInputId} name="pictures[]"
-                                    className="d-none" accept=".gif, .jpeg, .jpg, .png, .webp" multiple
-                                    onChange={(event)=>handleCommentPictures(event)}
-                                />
-                            </div>
-                        </div>
-
-                        <Link className="transparent-to-white-btn cancel-comment-button" onClick={(event)=>clearInputs(event)}>
-                            Cancel
-                        </Link>
-                        <button className="green-btn cursor-pointer" type="submit">Comment</button>
-                    </form>
+                            <button className="green-btn cursor-pointer" type="submit">Comment</button>
+                        </form>
+                    }
                 </div>
         </div>
     )
