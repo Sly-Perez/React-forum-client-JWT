@@ -5,6 +5,7 @@ import { ApiDomain } from "../data/ApiDomain";
 import AddCommentForm from "./AddCommentForm";
 import CommentsListing from "./CommentsListing";
 import { Link, useNavigate } from "react-router-dom";
+import Spinner from "./Spinner";
 
 
 const PostCompleteInfoBox = ({post, userId, errors}) => {
@@ -14,6 +15,8 @@ const PostCompleteInfoBox = ({post, userId, errors}) => {
     const [user, setUser] = useState([]);
     const [userInSession, setUserInSession] = useState([]);
     const [userPicture, setUserPicture] = useState(null);
+
+    const [isLoading, setIsLoading] = useState(true);
 
     const [refreshComments, setRefreshComments] = useState(false);
 
@@ -38,6 +41,7 @@ const PostCompleteInfoBox = ({post, userId, errors}) => {
                 setUser(response);
                 readServiceUserPictures(response.userId);
                 readUserInSession();
+                setIsLoading(false);
                 return;
             }
             
@@ -119,6 +123,29 @@ const PostCompleteInfoBox = ({post, userId, errors}) => {
         setRefreshComments(!refreshComments);
     }
 
+    const loadPostData = () =>{
+        return (
+            <>
+                {
+                    (userInSession.userId === user.userId) || (userInSession.hierarchyLevelId === 1)
+                    ?
+                    <div className="d-flex flex-row justify-content-f-end mb-5">
+                        <button className="white-to-dark-red-btn squared-border cursor-pointer" onClick={()=>deletePost(post.postId)}>
+                            Delete
+                        </button>
+                    </div>
+                    :
+                    null
+                }
+                <PostDetailsBox post={post} user={user} userPicture={userPicture} />
+                <AddCommentForm isMainComment={true} addCommentIsShown={true} postId={post.postId} onCommentSubmit={() => handleRefreshOfComments()}/>
+                <div className="post-comments-box py-20 px-20 mt-10">
+                    < CommentsListing post={post} userInSession={userInSession} refreshTrigger={refreshComments} handleRefreshOfComments={handleRefreshOfComments}/>
+                </div>
+            </>
+        )
+    }
+
     return (
         <div className={`post-details-box w-60-percent px-20 py-20 my-20 gap-10 ${errors.length > 0 ? "d-flex justify-content-center align-items-center" : ""}`}>
             {
@@ -126,21 +153,16 @@ const PostCompleteInfoBox = ({post, userId, errors}) => {
                 ?
                 <>
                     {
-                        (userInSession.userId === user.userId) || (userInSession.hierarchyLevelId === 1)
+                        isLoading
                         ?
-                        <div className="d-flex flex-row justify-content-f-end mb-5">
-                            <button className="white-to-dark-red-btn squared-border cursor-pointer" onClick={()=>deletePost(post.postId)}>
-                                Delete
-                            </button>
-                        </div>
+                        < Spinner />
                         :
-                        null
+                            (post && user && userInSession && userPicture)
+                            ?
+                            loadPostData()
+                            :
+                            null
                     }
-                    <PostDetailsBox post={post} user={user} userPicture={userPicture} />
-                    <AddCommentForm isMainComment={true} addCommentIsShown={true} postId={post.postId} onCommentSubmit={() => handleRefreshOfComments()}/>
-                    <div className="post-comments-box py-20 px-20 mt-10">
-                        < CommentsListing post={post} userInSession={userInSession} refreshTrigger={refreshComments} handleRefreshOfComments={handleRefreshOfComments}/>
-                    </div>
                 </>
                 :
                 <div className="error-box movie-poster py-20 px-20 text-center">
