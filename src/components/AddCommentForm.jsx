@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ApiDomain } from "../data/ApiDomain";
 import Spinner from "./Spinner";
 
-const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideAddCommentForm, postId, responseTo = null, index = null, onCommentSubmit}) => {
+const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideAddCommentForm, postId, responseTo = null, onCommentSubmit}) => {
 
     const [errorsList, setErrorsList] = useState([]);
     const [addImgIconIsShown, setAddImgIconIsShown] = useState(false);
@@ -17,11 +17,9 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
     const [isLoading, setIsLoading] = useState(true);
 
     const token = localStorage.getItem("sessionToken") || "";
-    const [fileInputId, setFileInputId] = useState("");
 
     useEffect(()=>{
         readServiceUser();
-        generateFileInputId();
     }, [postId, responseTo]);
 
     const readServiceUser = async()=>{
@@ -70,17 +68,6 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
             return;
         }
     }
-
-    const generateFileInputId = () => {
-        let baseId = `add-comment-file-input-${responseTo != null ? `c-${responseTo}` : `p-${postId}`}`;
-        let newFileInputId = baseId;
-        
-        while (document.getElementById(newFileInputId)) {
-            newFileInputId = `${baseId}-${index}`;
-        }
-        
-        setFileInputId(newFileInputId);
-    };
 
     const submitForm = async(event)=>{
         event.preventDefault();
@@ -163,7 +150,7 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
 
     const handleClickOnAddImgIcon = (event)=>{
         event.preventDefault();
-        document.getElementById(fileInputId).click();
+        event.target.nextElementSibling.click();
     }
 
     const clearInputs = (event)=>{
@@ -214,13 +201,14 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
                                     />
                                 </div>
                                 <div className="add-comment-file-input-box">
-                                    <label htmlFor={fileInputId} className={`${addImgIconIsShown ? "" : "d-none"}`} >
-                                        <i className="fa-solid fa-images cursor-pointer pagination-item p-4" onClick={(event)=>handleClickOnAddImgIcon(event)}></i>
-                                    </label>
-                                    <input type="file" id={fileInputId} name="pictures[]"
-                                        className="d-none" accept=".gif, .jpeg, .jpg, .png, .webp" multiple
-                                        onChange={(event)=>handleCommentPictures(event)}
-                                    />
+                                    <div className={`${addImgIconIsShown ? "" : "d-none"}`} >
+                                        <i className="fa-solid fa-images cursor-pointer pagination-item p-4" onClick={(event)=>handleClickOnAddImgIcon(event)}>
+                                        </i>
+                                        <input type="file"
+                                            className="d-none" accept=".gif, .jpeg, .jpg, .png, .webp" multiple
+                                            onChange={(event)=>handleCommentPictures(event)}
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
