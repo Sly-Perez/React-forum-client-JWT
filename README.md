@@ -8,9 +8,10 @@ If you feel interested in the API consumed in this client app. Feel free to give
 
 ## Git Commitments Structure
 
-**(folder name)** folder added/updated/deleted: **(sub-folder name *[If one exists]*)** added/updated/deleted => **(filename)** added/updated/deleted **(breaf explanation of the action)**<br>
-Example;
-src folder updated: components folder updated => loginForm.jsx added (This component contains the login form for users to log in)
+**(folder name)** folder added/updated/deleted: **(sub-folder name *[If one exists]*)** added/updated/deleted => **(filename)** added/updated/deleted **(breaf explanation of the action)**
+
+**Example;**<br>
+**src** folder updated: **components** folder updated => **loginForm.jsx** added (This component contains the login form for users to log in)
 
 ## Tools Used
 
