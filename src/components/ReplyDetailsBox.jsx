@@ -5,7 +5,7 @@ import { ApiDomain } from "../data/ApiDomain";
 import CommentReactionsBox from "./CommentReactionsBox";
 import Spinner from "./Spinner";
 
-const ReplyDetailsBox = ({userInSession, reply, userId, index, handleRefreshOfComments}) => {
+const ReplyDetailsBox = ({userInSession, reply, userId, handleRefreshOfComments}) => {
 
     const [user, setUser] = useState([]);
     const [userPicture, setUserPicture] = useState([]);
@@ -195,7 +195,7 @@ const ReplyDetailsBox = ({userInSession, reply, userId, index, handleRefreshOfCo
                                     </div>
                                     < AddCommentForm isMainComment={false} addCommentIsShown={addCommentIsShown} 
                                         hideAddCommentForm={hideAddCommentForm} postId={reply.postId} responseTo={reply.responseTo}
-                                        index={index} onCommentSubmit={() => handleRefreshOfComments()}
+                                        onCommentSubmit={() => handleRefreshOfComments()}
                                     />
                                 </div>
                             </div>
