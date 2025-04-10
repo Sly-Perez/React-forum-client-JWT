@@ -60,8 +60,8 @@ const RepliesListing = ({userInSession, comment, handleRefreshOfComments}) => {
             </Link>
             <div className={`more-comments-displayed px-40 ${repliesBoxIsOpen ? "" : "d-none"}`}>
                 {
-                    replies.map((item, index)=>(
-                        <ReplyDetailsBox key={item.commentId} userInSession={userInSession} reply={item} userId={item.userId} index={index + 1} handleRefreshOfComments={handleRefreshOfComments}/>
+                    replies.map((item)=>(
+                        <ReplyDetailsBox key={item.commentId} userInSession={userInSession} reply={item} userId={item.userId} handleRefreshOfComments={handleRefreshOfComments}/>
                     ))
                 }
             </div>
