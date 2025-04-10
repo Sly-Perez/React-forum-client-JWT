@@ -6,6 +6,12 @@ Weekie Mochi is a forum-like web app that consumes the web service of a 2chan-li
 This web client App will work along with the 2chan-like-app-API-JWT, which is the version of the API that handles sessions through JSON WEB TOKEN's.<br>
 If you feel interested in the API consumed in this client app. Feel free to give it a try! You can find the documentation [here](https://github.com/Sly-Perez/2chan-like-app-API-JWT).<br>
 
+## Git Commitments Structure
+folders changes:
+(folder name) folder added/updated/deleted: (sub-folder name *[If one exists]*) added/updated/deleted => (filename) added/updated/deleted (breaf explanation of the action)
+
+example;
+src folder updated: loginForm.jsx added (This component contains the login form for users to log in)
 
 ## Tools Used
 
