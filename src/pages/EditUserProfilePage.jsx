@@ -12,7 +12,6 @@ const EditUserProfilePage = () => {
     const [user, setUser] = useState([]);
     const [userPicture, setUserPicture] = useState(null);
 
-    const [errorsList, setErrorsList] = useState([]);
 
     const token = localStorage.getItem("sessionToken") || "";
 
@@ -59,10 +58,6 @@ const EditUserProfilePage = () => {
                 setUserPicture(url);
                 return;
             }
-
-            const data = await response.json();
-            const errors = data.errors;
-            setErrorsList(errors);
         }
         catch (error) {
             navigate("/serverError");
@@ -72,7 +67,7 @@ const EditUserProfilePage = () => {
 
     return (
         <section id="section-1-user-profile" className="py-20 px-20 min-height-500 d-flex flex-column align-items-center">
-            <EditUserProfileBox user={user} userPicture={userPicture} errors={errorsList}/>
+            <EditUserProfileBox user={user} userPicture={userPicture}/>
         </section>
     )
 }
