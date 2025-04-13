@@ -128,7 +128,7 @@ const MainNavbar = () => {
         <header>
             <nav className="nav-bar py-20 mx-auto">
                 <div className="d-flex flex-row align-items-center justify-content-between px-20">
-                    <Link to="/home">
+                    <Link to="/weekieTalkie">
                         <div className="d-flex align-items-center">
                             <span className="f-size-22 text-shadow-sm f-black-color">WeekieMochi</span>
                             <img className="img-fluid icon-sized-img png-border" src={WMIconNavBar} alt="Weekie Mochi icon: cat playing"/>
