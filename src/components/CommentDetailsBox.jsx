@@ -110,6 +110,7 @@ const CommentDetailsBox = ({userInSession, comment, userId, handleRefreshOfComme
     }
 
     const deleteComment = async(id)=>{
+        setIsLoading(true);
         const apiUrl = `${ApiDomain}/comments/${id}`;
         try{
             const response = await fetch(apiUrl, {
@@ -123,7 +124,7 @@ const CommentDetailsBox = ({userInSession, comment, userId, handleRefreshOfComme
                 handleRefreshOfComments();
                 return;
             }
-            
+            setIsLoading(false);
         } 
         catch (error) {
             // navigate("/serverError");
