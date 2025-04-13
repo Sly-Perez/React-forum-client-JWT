@@ -76,6 +76,9 @@ h1,h2,h3,h4,p{
 .w-fit-content{
     width: fit-content;
 }
+.h-100-percent{
+    height: 100%;
+}
 /*heights*/
 .min-height-500{
     min-height: 31.25rem;
@@ -129,6 +132,9 @@ h1,h2,h3,h4,p{
 }
 .border-none{
     border: none;
+}
+.border-3{
+    border: 0.188rem solid #000;
 }
 
 /*border radius*/
@@ -313,7 +319,9 @@ h1,h2,h3,h4,p{
 .f-anchor-color{
     color: rgb(85, 26, 139);
 }
-
+.f-white-color{
+    color: #fff;
+}
 
 /*columns per row*/
 .per-row-3-col{
@@ -377,7 +385,7 @@ button{
 }
 
 /*inputs*/
-.search-var-input{
+.search-bar-input{
     background-color: #f1f1f1;
     border: 0.063rem solid transparent;
     transition: all ease-in 0.2s;
@@ -385,9 +393,9 @@ button{
     color: #000;
     padding: 0.635rem 0.938rem;
 }
-.search-var-input:focus{
+.search-bar-input:focus{
     background-color: #fff;
-    border: 0.063rem solid #000;
+    border: 0.063rem solid #00000079;
 }
 .resize-none{
     resize: none;
@@ -466,10 +474,13 @@ button{
 .bg-transparent{
     background-color: transparent;
 }
+.bg-black{
+    background-color: #000;
+}
 .bg-cat-gif{
     background-image: url('./assets/images/page/background-cat-gif.gif');
     background-repeat: repeat;
-    min-height: 42rem;
+    min-height: 50rem;
 }
 #section-1-wt{
     background-color: #fff;
