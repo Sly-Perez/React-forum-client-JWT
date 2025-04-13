@@ -1,17 +1,22 @@
 export const NavbarData = [
     {
-        url: "/home",
-        title: "Home",
-        option: "Home"
-    },
-    {
         url: "/weekieTalkie",
-        title: "WeekieTalkie",
-        option: "Weekie Talkie"
+        title: "Newest Posts!!!!!!!!!!!!!!!!!!!!!!!!!!!",
+        option: "Newest"
     },
     {
-        url: "/news",
-        title: "Recent News",
-        option: "News"
+        url: "/weekieTalkie/popular",
+        title: "(☞ﾟヮﾟ)☞ Popular Postssssssssssss",
+        option: "Popular"
+    },
+    {
+        url: "/weekieTalkie/my/posts",
+        title: "Posts you have published",
+        option: "My Posts"
+    },
+    {
+        url: "/weekieTalkie/my/interacted",
+        title: "Posts you have commented onnnn!!!!!!! ᕙ(ಠ_ಠ‶)ᕗ ᕙ(ಠ_ಠ‶)ᕗ",
+        option: "Interacted"
     }
 ]
