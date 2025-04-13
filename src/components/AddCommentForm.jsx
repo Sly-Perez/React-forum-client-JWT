@@ -72,6 +72,7 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
     const submitForm = async(event)=>{
         event.preventDefault();
 
+        setIsLoading(true);
         setErrorsList([]);
 
         const formData = new FormData();
@@ -107,6 +108,7 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
                 body: formData,
             });
 
+            setIsLoading(false);
             if(data.status === 201){
                 setCommentDescription("");
                 setCommentPictures([]);
@@ -129,6 +131,7 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
             }
         } 
         catch (error) {
+            setIsLoading(false);
             console.error("Error uploading data:", error);
         }
     }
@@ -186,7 +189,7 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
                     {
                         isLoading
                         ?
-                        < Spinner />
+                        < Spinner sizeLevel={2} />
                         :
                         <form className="d-flex flex-row gap-10 align-items-center" action="" onSubmit={(event)=>submitForm(event)}>
 
@@ -195,7 +198,7 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
                                     <img className="img-fluid icon-sized-img circle-like-border" src={userPicture} alt={`${user.username}'s profile picture`} />
                                 </Link>
                                 <div className="w-100-percent">
-                                    <textarea className="w-90-percent resize-none search-var-input transition-all-ease-in-5ms" 
+                                    <textarea className="w-90-percent resize-none search-bar-input transition-all-ease-in-5ms" 
                                         rows="2" minLength="1" maxLength="300" placeholder="Add a comment..."
                                         value={commentDescription} onChange={(event)=>setCommentDescription(event.target.value)} onKeyUp={()=>handleCommentDescriptionKeyUp()}
                                     />
