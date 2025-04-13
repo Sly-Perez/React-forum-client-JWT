@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import './UserProfileBox.css';
 import { ApiDomain } from '../data/ApiDomain';
 import { useState } from 'react';
+import Spinner from './Spinner';
 
 const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, isDeleteButtonActive = false, userIsAdmin = false}) => {
 
@@ -10,7 +11,13 @@ const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, 
 
     const [errorsList, setErrorsList] = useState([]);
 
+    const [isInitialFetchLoading, setIsInitialFetchLoading] = useState(true);
+    const [isDeletionLoading, setIsDeletionLoading] = useState(false);
+
     const deleteProfile = async(id)=>{
+        setIsInitialFetchLoading(false)
+        setIsDeletionLoading(true);
+        
         const apiUrl = userIsAdmin
                         ? `${ApiDomain}/users/${id}`
                         : `${ApiDomain}/users/my/profile`;
@@ -27,7 +34,7 @@ const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, 
             const response = await data.json();
 
             if(data.status === 200){
-                navigate("/home");
+                navigate("/weekieTalkie");
                 return;
             }
             
@@ -41,26 +48,13 @@ const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, 
         }
     }
 
-    return (
-        <>
-        {
-            (errorsList.length > 0)
-            ?
-            <ul className="d-flex flex-column alert-box py-20 px-20 m-0">
+    const loadUserData = ()=>{
+        return (
+            <article className={`user-profile-box d-flex flex-row gap-10 w-60-percent px-20 py-20 my-20 gap-10`}>
                 {
-                    errorsList.map((item, index)=>(
-                        <li className="f-size-14 list-style-circle" key={index}>{item}</li>
-                    ))
-                }
-            </ul>
-            :
-            null
-        }
-        <article className={`user-profile-box d-flex flex-row ${(errors.length === 0) ? "" : "justify-content-center align-items-center"} gap-10 w-60-percent px-20 py-20 my-20 gap-10`}>
-
-                {
-                    (errors.length > 0)
+                    (errors.length > 0 && user.length === 0)
                     ? 
+                    <div className="w-100-percent d-flex flex-row justify-content-center align-items-center">
                         <div className="movie-poster py-20 px-20 text-center">
                             { 
                                 errors.map((item, index)=>(
@@ -68,6 +62,7 @@ const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, 
                                 ))
                             }
                         </div>
+                    </div>
                     : 
                     <>
                         <div className="user-profile-picture w-25-percent">
@@ -90,7 +85,7 @@ const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, 
                                 {
                                     isEditButtonActive
                                     ?
-                                    <button className="pagination-item w-fit-content cursor-pointer px-20 py-10" onClick={()=>navigate("/my/settings")}>
+                                    <button className="pagination-item w-fit-content cursor-pointer px-20 py-10" onClick={()=>navigate("/users/my/settings")}>
                                         Edit
                                     </button>
                                     :
@@ -109,7 +104,49 @@ const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, 
                         </div>
                     </>
                 }
-        </article>
+            </article>
+        )
+    }
+
+    return (
+        <>
+            {
+                (errorsList.length > 0)
+                ?
+                <ul className="d-flex flex-column alert-box py-20 px-20 m-0">
+                    {
+                        errorsList.map((item, index)=>(
+                            <li className="f-size-14 list-style-circle" key={index}>{item}</li>
+                        ))
+                    }
+                </ul>
+                :
+                null
+            }
+            
+            {
+                isInitialFetchLoading
+                ?
+                    errors.length === 0
+                    ?
+                        (user && userPicture)
+                        ?
+                        loadUserData()
+                        :
+                        <Spinner />
+                    :
+                        (errors)
+                        ?
+                        loadUserData()
+                        :
+                        < Spinner />
+                :
+                    isDeletionLoading
+                    ?
+                    < Spinner />
+                    :
+                    loadUserData()
+            }
         </>
     )
 }
