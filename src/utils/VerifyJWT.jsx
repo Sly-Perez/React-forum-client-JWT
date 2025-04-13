@@ -28,7 +28,7 @@ export const VerifyJWT = async(navigate, currentPath) => {
         
         //otherwise, if they want to go to "/" or "/signup" and their JWT is still valid, they will be redirected to the home page
         if(data.status === 400){
-            navigate("/home");
+            navigate("/weekieTalkie");
             return;
         }
         
