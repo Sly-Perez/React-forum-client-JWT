@@ -5,7 +5,6 @@ import {
 import './App.css';
 import SignUpPage from './pages/SignUpPage';
 import LogInPage from './pages/LogInPage';
-import HomePage from './pages/HomePage';
 import MainLayout from './layout/MainLayout';
 import ServerErrorPage from './pages/ServerErrorPage';
 import UserProfilePage from './pages/UserProfilePage';
@@ -14,8 +13,9 @@ import CreatePostPage from './pages/CreatePostPage';
 import WeekieTalkiePage from './pages/WeekieTalkiePage';
 import PostDetailsPage from './pages/PostDetailsPage';
 import MyPostsPage from './pages/MyPostsPage';
-import NewsPage from './pages/NewsPage';
 import NotFoundErrorPage from './pages/NotFoundErrorPage';
+import PopularPostsPage from './pages/PopularPostsPage';
+import InteractedPostsPage from './pages/InteractedPostsPage';
 
 function App() {
 
@@ -26,14 +26,14 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/serverError" element={<ServerErrorPage />} />
         <Route path="/" element={<MainLayout />}>
-          <Route path="/home" element={<HomePage />} />
           <Route path="/weekieTalkie" element={<WeekieTalkiePage />} />
-          <Route path="/news" element={<NewsPage />} />
-          <Route path="/my/posts" element={<MyPostsPage />} />
+          <Route path="/weekieTalkie/my/posts" element={<MyPostsPage />} />
+          <Route path="/weekieTalkie/popular" element={<PopularPostsPage />} />
+          <Route path="/weekieTalkie/my/interacted" element={<InteractedPostsPage />} />
           <Route path="/users/profile/:userId" element={<UserProfilePage />} />
-          <Route path="/my/settings" element={<EditUserProfilePage />} />
-          <Route path="/createPost" element={<CreatePostPage />} />
-          <Route path="/details/posts/:postId" element={<PostDetailsPage />} />
+          <Route path="/users/my/settings" element={<EditUserProfilePage />} />
+          <Route path="/posts/add" element={<CreatePostPage />} />
+          <Route path="/posts/details/:postId" element={<PostDetailsPage />} />
         </Route>
         <Route path="*" element={<NotFoundErrorPage />} />
       </>
