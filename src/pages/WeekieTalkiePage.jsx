@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import WeekieTalkieSideBar from "../components/WeekieTalkieSideBar";
 import { ApiDomain } from "../data/ApiDomain";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import PostsListing from "../components/PostsListing";
 import { VerifyJWT } from "../utils/VerifyJWT";
+import NoPostsFoundErrorBox from "../components/NoPostsFoundErrorBox";
 
 const WeekieTalkiePage = () => {
     
@@ -13,13 +13,17 @@ const WeekieTalkiePage = () => {
     const [errorsList, setErrorsList] = useState([]);
     const [postsList, setPostsList] = useState([]);
 
-    const successMessage = location.state?.successMessage || null;
+    const [successMessage, setSuccessMessage] = useState(null);
+
+    const [filterValue, setFilterValue] = useState("");
+    const [postsFilterList, setPostsFilterList] = useState([]);
 
     const token = localStorage.getItem("sessionToken") || "";
 
     useEffect(()=>{
         VerifyJWT(navigate, location.pathname);
         readService();
+        setSuccessMessage(location.state?.successMessage ?? null);
     }, []);
 
     const readService = async()=>{
@@ -35,6 +39,7 @@ const WeekieTalkiePage = () => {
 
             if(response.status === 200){
                 setPostsList(data);
+                setPostsFilterList(data);
                 return;
             }
 
@@ -46,18 +51,38 @@ const WeekieTalkiePage = () => {
         }
     }
 
+    const filterPosts = (text)=>{
+        setFilterValue(text);
+
+        const posts = postsList.filter(post => 
+            post.header.toLowerCase().includes(text.trim().toLowerCase()) ||
+            post.description.toLowerCase().includes(text.trim().toLowerCase())
+        );
+        setPostsFilterList(posts);
+    }
+
     return (
         <>
             <section id="section-1-wt" className="py-20 px-20 min-height-500">
-                <div className="d-flex flex-row mx-auto gap-10">
-                    < WeekieTalkieSideBar />
-                    <div className="post-list-section w-60-percent px-20 py-20 gap-10">
-                        <div className="d-flex flex-row justify-content-between align-items-center">
-                            <h1 className="f-size-30">Posts</h1>
-                            <button className="d-flex flex-row align-items-center gap-10 pagination-item cursor-pointer px-20 py-10" onClick={()=>navigate("/createPost")}>
-                                <i className="fa-solid fa-circle-plus"></i>
+                <div className="d-flex flex-column align-items-center gap-10">
+                    <div className="post-list-section w-90-percent px-20 py-20 gap-10">
+                        <div className="create-post-button my-10">
+                            <button className="d-flex flex-row gap-10 pagination-item cursor-pointer px-20 py-10" onClick={()=>navigate("/posts/add")}>
+                                <i className="fa-solid fa-circle-plus d-flex align-items-center"></i>
                                 <span>Create Post</span>
                             </button>
+                        </div>
+
+                        <div className="d-flex flex-row justify-content-between align-items-center">
+                            <h1 className="f-size-30">Newest</h1>
+                            
+                            <div className="d-flex flex-row">
+                                <input className="py-10 px-10" type="text" placeholder="Search" 
+                                    value={filterValue}
+                                    onChange={(event)=>filterPosts(event.target.value)}
+                                />
+                                <i className="fa-solid fa-magnifying-glass border-3 py-10 px-10 f-white-color bg-black"></i>
+                            </div>
                         </div>
                         <div className={`posts-list ${errorsList.length === 0 ? "" : "d-flex justify-content-center align-items-center"}`}>
                             
@@ -76,7 +101,15 @@ const WeekieTalkiePage = () => {
                             {
                                 errorsList.length === 0
                                 ?
-                                < PostsListing posts={postsList} />
+                                    (postsList.length === 0)
+                                    ? 
+                                    < NoPostsFoundErrorBox />
+                                    :
+                                        (postsFilterList.length === 0)
+                                        ?
+                                        < NoPostsFoundErrorBox dataWasFiltered={true} />
+                                        :
+                                        < PostsListing posts={postsFilterList} />
                                 :
                                 <div className="post-box d-flex flex-row align-items-center gap-10 px-20 py-20 my-20">
                                     <div className="">
@@ -89,7 +122,7 @@ const WeekieTalkiePage = () => {
                                             </h1>
                                         </div>
                                         <div className="">
-                                            <Link className="WT-anchor" to="/home">Go Back To Home</Link>
+                                            <Link className="WT-anchor" to="/weekieTalkie">Go Back To Home</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -97,9 +130,6 @@ const WeekieTalkiePage = () => {
                             }
                         </div>
                     </div>
-                    <aside className="wt-advertisement px-20">
-
-                    </aside>
                 </div>
             </section>
         </>
