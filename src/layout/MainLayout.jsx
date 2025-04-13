@@ -1,11 +1,27 @@
-import React from 'react';
+import AlternativeNavbar from '../components/AlternativeNavbar';
 import MainNavbar from '../components/MainNavbar';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 const MainLayout = () => {
+  const location = useLocation();
+
+  const handleNavbarSelection = ()=>{
+    if(location.pathname.includes("/weekieTalkie/popular") || location.pathname.includes("/users/profile/") || location.pathname.includes("/posts/")){
+      return (
+        < AlternativeNavbar />
+      )
+    }
+
+    return (
+      < MainNavbar />
+    )
+  }
+  
   return (
     <>
-        <MainNavbar />
+        {
+          handleNavbarSelection()
+        }
         <Outlet />
     </>
   )
