@@ -98,6 +98,7 @@ const PostCompleteInfoBox = ({post, userId, errors}) => {
 
     const deletePost = async(id)=>{
         const apiUrl = `${ApiDomain}/posts/${id}`;
+        setIsLoading(true);
 
         try{
 
@@ -112,9 +113,11 @@ const PostCompleteInfoBox = ({post, userId, errors}) => {
                 navigate(`/weekieTalkie`, { state: { successMessage: "Post Deleted Successfully!" } });
                 return;
             }
-            
+
+            setIsLoading(false);
         }
         catch (error) {
+            setIsLoading(false);
             console.error("Error uploading data:", error);
         }
     }
@@ -170,7 +173,7 @@ const PostCompleteInfoBox = ({post, userId, errors}) => {
                     errors.map((item, index)=>(
                         <div key={index}>
                             <p className="mb-10">Whoops! {item}</p>
-                            <Link className="WT-anchor" to="/home">Go Back to Home</Link>
+                            <Link className="WT-anchor" to="/WeekieTalkie">Go Back to Home</Link>
                         </div>
                 ))
                 }
