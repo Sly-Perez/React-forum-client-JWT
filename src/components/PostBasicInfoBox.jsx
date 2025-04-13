@@ -71,7 +71,7 @@ const PostBasicInfoBox = ({post, userId, userBlankPicture}) => {
                 ?
                 <Spinner marginWillBeAdded={true} />
                 :
-                <Link className="post-box d-flex flex-row align-items-center gap-10 px-20 py-20 my-20" to={`/details/posts/${post.postId}`}>
+                <Link className="post-box d-flex flex-row align-items-center gap-10 px-20 py-20 my-20" to={`/posts/details/${post.postId}`}>
                     <div className="">
                         <img className="img-fluid icon-sized-img circle-like-border" src={userPicture ?? userBlankPicture} alt={`${user.username}'s profile picture`} />
                     </div>
