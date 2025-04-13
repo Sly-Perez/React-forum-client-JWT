@@ -3,13 +3,19 @@ import { useEffect, useState } from "react";
 import { ApiDomain } from "../data/ApiDomain";
 import { Link, useNavigate } from "react-router-dom";
 import { preventDefaultEvent } from '../utils/PreventDefaultEvent';
+import Spinner from './Spinner';
 
-const EditUserProfileBox = ({user, userPicture, errors}) => {
+const EditUserProfileBox = ({user, userPicture}) => {
     const navigate = useNavigate();
     
     const [newUsername, setNewUsername] = useState(user.username ?? "");
     const [newUserEmail, setNewUserEmail] = useState(user.email ?? "");
     const [newUserPicture, setNewUserPicture] = useState("");
+
+    const [isInitialFetchLoading, setIsInitialFetchLoading] = useState(true);
+    const [isUpdateLoading, setIsUpdateLoading] = useState(false);
+
+    const [errorsList, setErrorsList] = useState([]);
 
     useEffect(()=>{
         setNewUsername(user.username ?? "");
@@ -21,7 +27,9 @@ const EditUserProfileBox = ({user, userPicture, errors}) => {
 
     const submitForm = async(event)=>{
         preventDefaultEvent(event);
-        errors = [];
+        setIsInitialFetchLoading(false);
+        setIsUpdateLoading(true);
+        setErrorsList([]);
 
         const apiUrl =  `${ApiDomain}/users/my/profile`;
 
@@ -51,23 +59,26 @@ const EditUserProfileBox = ({user, userPicture, errors}) => {
                 return;
             }
             
+            setIsUpdateLoading(false);
             const message = await response.errors;
-            errors = message;
+            setErrorsList(message);
         }
         catch (error) {
+            setIsUpdateLoading(false);
             console.error("Error uploading data:", error);
         }
     }
 
-    return (
-        <article className={`user-profile-box max-height-360 d-flex flex-row gap-10 ${errors.length > 0 ? "justify-content-center align-items-center" : ""} w-60-percent px-20 py-20 my-20`}>
+    const loadUserData = ()=>{
+        return (
+            <article className="user-profile-box w-60-percent px-20 py-20 my-20">
 
                 {
-                    errors.length > 0
+                    errorsList.length > 0
                     ? 
                         <ul className="w-60-percent d-flex flex-column alert-box py-20 px-20 my-10">
                             { 
-                                errors.map((item, index)=>(
+                                errorsList.map((item, index)=>(
                                     <li className="f-size-14 list-style-circle" key={index}>{item}</li>
                                 ))
                             }
@@ -76,41 +87,65 @@ const EditUserProfileBox = ({user, userPicture, errors}) => {
                     null
                 }
 
-                <div className="user-profile-picture w-40-percent">
-                    <img className="w-90-percent img-fluid" src={userPicture} alt={`${user.username}'s picture`}/>
+                <div className="d-flex flex-row gap-10">
+                    <div className="user-profile-picture w-40-percent">
+                        <img className="w-90-percent img-fluid" src={userPicture} alt={`${user.username}'s picture`}/>
+                    </div>
+                    <form className="user-profile-information d-flex flex-column gap-10" action="" onSubmit={(event)=>submitForm(event)}>
+                        <div className="d-flex flex-column gap-10">
+                            <h2>Username: </h2>
+                            <input type="text" minLength="1" maxLength="30" 
+                                className="add-header-input" 
+                                value={newUsername} onChange={(event)=>setNewUsername(event.target.value)}
+                            />
+                        </div>
+                        <div className="d-flex flex-column gap-10">
+                            <h2>Email: </h2>
+                            <input type="email" minLength="1" maxLength="100" 
+                                className="add-header-input" 
+                                value={newUserEmail} onChange={(event)=>setNewUserEmail(event.target.value)}
+                            />
+                        </div>
+                        <div className="d-flex flex-column gap-10">
+                            <h2>Profile Picture: </h2>
+                            <input className="upload-file-input cursor-pointer w-fit-content mt-10 mb-10" 
+                                type="file" accept=".gif, .jpeg, .jpg, .png, .webp"
+                                onChange={(event)=>setNewUserPicture(event.target.files[0])}
+                            />
+                        </div>
+                        <div className="d-flex flex-row gap-10">
+                            <Link className="transparent-to-white-btn squared-border" type="button" to={`/users/profile/${user.userId}`}>
+                                Cancel
+                            </Link>
+                            <button type="submit" className="pagination-item cursor-pointer px-20 py-10">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <form className="user-profile-information d-flex flex-column gap-10" action="" onSubmit={(event)=>submitForm(event)}>
-                    <div className="d-flex flex-column gap-10">
-                        <h2>Username: </h2>
-                        <input type="text" minLength="1" maxLength="30" 
-                            className="add-header-input" 
-                            value={newUsername} onChange={(event)=>setNewUsername(event.target.value)}
-                        />
-                    </div>
-                    <div className="d-flex flex-column gap-10">
-                        <h2>Email: </h2>
-                        <input type="email" minLength="1" maxLength="100" 
-                            className="add-header-input" 
-                            value={newUserEmail} onChange={(event)=>setNewUserEmail(event.target.value)}
-                        />
-                    </div>
-                    <div className="d-flex flex-column gap-10">
-                        <h2>Profile Picture: </h2>
-                        <input className="upload-file-input cursor-pointer w-fit-content mt-10 mb-10" 
-                            type="file" accept=".gif, .jpeg, .jpg, .png, .webp"
-                            onChange={(event)=>setNewUserPicture(event.target.files[0])}
-                        />
-                    </div>
-                    <div className="d-flex flex-row gap-10">
-                        <Link className="transparent-to-white-btn squared-border" type="button" to={`/users/profile/${user.userId}`}>
-                            Cancel
-                        </Link>
-                        <button type="submit" className="pagination-item cursor-pointer px-20 py-10">
-                            Save Changes
-                        </button>
-                    </div>
-                </form>
-        </article>
+
+            </article>
+        )
+    } 
+
+    return (
+        <>
+            {
+                isInitialFetchLoading
+                ?
+                    (user && userPicture)
+                    ?
+                    loadUserData()
+                    :
+                    < Spinner />
+                :
+                    (isUpdateLoading)
+                    ?
+                    < Spinner />
+                    :
+                    loadUserData()
+            }
+        </>
     )
 }
 
