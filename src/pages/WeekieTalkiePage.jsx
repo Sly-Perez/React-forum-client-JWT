@@ -74,7 +74,7 @@ const WeekieTalkiePage = () => {
                         </div>
 
                         <div className="d-flex flex-row justify-content-between align-items-center">
-                            <h1 className="f-size-30">Newest</h1>
+                            <h1 className="f-size-30">All Posts</h1>
                             
                             <div className="d-flex flex-row">
                                 <input className="py-10 px-10" type="text" placeholder="Search" 
