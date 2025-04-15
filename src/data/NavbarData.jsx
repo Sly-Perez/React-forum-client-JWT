@@ -1,7 +1,12 @@
 export const NavbarData = [
     {
         url: "/weekieTalkie",
-        title: "Newest Posts!!!!!!!!!!!!!!!!!!!!!!!!!!!",
+        title: "(˵ ͡~ ͜ʖ ͡°˵)ﾉ⌒♡*:・。. All Posts!!!!!!!!!!!!!",
+        option: "All Posts"
+    },
+    {
+        url: "/weekieTalkie/newest",
+        title: "Newest Posts!!!!!!!!!!!!!!!!!!!!!!!!!!! (╯°□°）╯︵ ┻━┻",
         option: "Newest"
     },
     {
