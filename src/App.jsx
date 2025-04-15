@@ -16,6 +16,7 @@ import MyPostsPage from './pages/MyPostsPage';
 import NotFoundErrorPage from './pages/NotFoundErrorPage';
 import PopularPostsPage from './pages/PopularPostsPage';
 import InteractedPostsPage from './pages/InteractedPostsPage';
+import NewestPostsPage from './pages/NewestPostsPage';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/serverError" element={<ServerErrorPage />} />
         <Route path="/" element={<MainLayout />}>
           <Route path="/weekieTalkie" element={<WeekieTalkiePage />} />
+          <Route path="/weekieTalkie/newest" element={<NewestPostsPage />} />
           <Route path="/weekieTalkie/my/posts" element={<MyPostsPage />} />
           <Route path="/weekieTalkie/popular" element={<PopularPostsPage />} />
           <Route path="/weekieTalkie/my/interacted" element={<InteractedPostsPage />} />
