@@ -1,1 +1,1 @@
-export const ApiDomain = "https://mintcream-cheetah-247214.hostingersite.com";
+export const ApiDomain = "https://api-jwt.weekiemochi.com";
