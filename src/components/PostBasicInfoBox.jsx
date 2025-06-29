@@ -50,7 +50,7 @@ const PostBasicInfoBox = ({post, userId, userBlankPicture}) => {
                 }
             });
 
-            if(data.status === 200){
+            if(data.status === 200 || data.status === 404){
                 const blob = await data.blob();
                 const url = URL.createObjectURL(blob);
                 setUserPicture(url);

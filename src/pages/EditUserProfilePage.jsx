@@ -52,7 +52,7 @@ const EditUserProfilePage = () => {
                 }
             });
 
-            if(response.status === 200){
+            if(response.status === 200 || response.status === 404){
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
                 setUserPicture(url);
