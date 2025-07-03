@@ -262,7 +262,7 @@ h1,h2,h3,h4,p{
 
 /*fonts*/
 .f-black-color{
-    color: #000;
+    color: #000 !important;
 }
 .text-shadow-sm{
     text-shadow: -0.015rem 0.015rem 0 #000, 
@@ -486,6 +486,9 @@ button{
     background-color: #fff;
     background-image: url('./assets/images/page/WT-background.webp');
     min-height: 50rem;
+}
+.bg-white{
+    background-color: #fff !important;
 }
 
 /*transitions*/

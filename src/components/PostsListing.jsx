@@ -2,7 +2,7 @@ import PostBasicInfoBox from "./PostBasicInfoBox";
 import { useEffect, useState } from "react";
 import { ApiDomain } from "../data/ApiDomain";
 
-const PostsListing = ({posts}) => {
+const PostsListing = ({posts, page, rowsPerPage}) => {
 
     const [userBlankPicture, setUserBlankPicture] = useState([]);
 
@@ -10,7 +10,7 @@ const PostsListing = ({posts}) => {
 
     useEffect(()=>{
         readServiceBlankPictures();
-    }, [posts]);
+    }, [posts, rowsPerPage, page]);
 
     const readServiceBlankPictures = async()=>{
         const apiUrl = `${ApiDomain}/users/zero/pictures`;
@@ -35,7 +35,7 @@ const PostsListing = ({posts}) => {
     }
 
     return (
-        posts.map((item)=>(
+        posts.slice((page - 1) * rowsPerPage, page * rowsPerPage).map((item)=>(
             < PostBasicInfoBox post={item} userId={item.userId} userBlankPicture={userBlankPicture} key={item.postId} />
         ))
     )

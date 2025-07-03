@@ -4,6 +4,7 @@ import { ApiDomain } from "../data/ApiDomain";
 import { useEffect, useState } from "react";
 import { VerifyJWT } from "../utils/VerifyJWT";
 import NoPostsFoundErrorBox from "../components/NoPostsFoundErrorBox";
+import PaginationBox from "../components/PaginationBox";
 
 const InteractedPostsPage = () => {
 
@@ -15,6 +16,10 @@ const InteractedPostsPage = () => {
 
     const [filterValue, setFilterValue] = useState("");
     const [postsFilterList, setPostsFilterList] = useState([]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(6);
 
     const [successMessage, setSuccessMessage] = useState(null);
 
@@ -40,6 +45,17 @@ const InteractedPostsPage = () => {
             if(response.status === 200){
                 setPostsList(data);
                 setPostsFilterList(data);
+
+                if(data.length > 0){
+                    const totalPages = Math.ceil(data.length / rowsPerPage);
+                    setTotalPages(totalPages);
+                    setCurrentPage(1);
+                }
+                else{
+                    setTotalPages(0);
+                    setCurrentPage(0);
+                }
+
                 return;
             }
 
@@ -59,6 +75,14 @@ const InteractedPostsPage = () => {
             post.description.toLowerCase().includes(text.trim().toLowerCase())
         );
         setPostsFilterList(posts);
+        setTotalPages(Math.ceil(posts.length / rowsPerPage));
+        setCurrentPage(1);
+    }
+
+    const changePage = (page)=>{
+        if((page > 0) && !(page > totalPages)){
+            setCurrentPage(page);
+        }
     }
 
     return (
@@ -109,7 +133,10 @@ const InteractedPostsPage = () => {
                                             ?
                                             < NoPostsFoundErrorBox dataWasFiltered={true} />
                                             :
-                                            < PostsListing posts={postsFilterList} />
+                                            <>
+                                                < PostsListing posts={postsFilterList} page={currentPage} rowsPerPage={rowsPerPage} />
+                                                < PaginationBox currentPage={currentPage} totalPages={totalPages} changePage={changePage} />
+                                            </>
                                     :
                                     <div className="post-box d-flex flex-row align-items-center gap-10 px-20 py-20 my-20">
                                         <div className="">

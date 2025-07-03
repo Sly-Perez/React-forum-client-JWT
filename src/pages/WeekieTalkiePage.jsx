@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import PostsListing from "../components/PostsListing";
 import { VerifyJWT } from "../utils/VerifyJWT";
 import NoPostsFoundErrorBox from "../components/NoPostsFoundErrorBox";
+import PaginationBox from "../components/PaginationBox";
 
 const WeekieTalkiePage = () => {
     
@@ -17,6 +18,10 @@ const WeekieTalkiePage = () => {
 
     const [filterValue, setFilterValue] = useState("");
     const [postsFilterList, setPostsFilterList] = useState([]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(6);
 
     const token = localStorage.getItem("sessionToken") || "";
 
@@ -40,6 +45,17 @@ const WeekieTalkiePage = () => {
             if(response.status === 200){
                 setPostsList(data);
                 setPostsFilterList(data);
+                
+                if(data.length > 0){
+                    const totalPages = Math.ceil(data.length / rowsPerPage);
+                    setTotalPages(totalPages);
+                    setCurrentPage(1);
+                }
+                else{
+                    setTotalPages(0);
+                    setCurrentPage(0);
+                }
+
                 return;
             }
 
@@ -59,6 +75,12 @@ const WeekieTalkiePage = () => {
             post.description.toLowerCase().includes(text.trim().toLowerCase())
         );
         setPostsFilterList(posts);
+        setTotalPages(Math.ceil(posts.length / rowsPerPage));
+        setCurrentPage(1);
+    }
+
+    const changePage = (page)=>{
+        setCurrentPage(page);
     }
 
     return (
@@ -109,7 +131,10 @@ const WeekieTalkiePage = () => {
                                         ?
                                         < NoPostsFoundErrorBox dataWasFiltered={true} />
                                         :
-                                        < PostsListing posts={postsFilterList} />
+                                        <>
+                                            < PostsListing posts={postsFilterList} page={currentPage} rowsPerPage={rowsPerPage} />
+                                            < PaginationBox currentPage={currentPage} totalPages={totalPages} changePage={changePage} />
+                                        </>
                                 :
                                 <div className="post-box d-flex flex-row align-items-center gap-10 px-20 py-20 my-20">
                                     <div className="">
