@@ -112,6 +112,14 @@ h1,h2,h3,h4,p{
     cursor: pointer;
 }
 
+/*positions*/
+.position-relative{
+    position: relative;
+}
+.position-absolute{
+    position: absolute;
+}
+
 /*list items*/
 .user-nav-bar-option{
     color: #000;
@@ -333,7 +341,22 @@ h1,h2,h3,h4,p{
     grid-template-columns: repeat(2, 1fr);
 }
 
+/*absolute elements*/
+.icon-top-right{
+    border-radius: 0 0 0 0.4rem;
+    background-color: #000;
+    color: white;
+    top: 0%;
+    right: 0%;
+    padding: 0.5rem;
+}
+
 /*button*/
+.crop-image-buttons-box{
+    z-index: 99;
+    position: absolute;
+    bottom: -10%;
+}
 .green-btn{
     background-color: #4a646a;
     color: #fff;
@@ -345,6 +368,12 @@ h1,h2,h3,h4,p{
     color: #000;
     border-radius: 1.25rem;
     border: 0.063rem solid transparent;
+    padding: 0.635rem 0.938rem;
+}
+.white-btn{
+    background-color: #fff;
+    color: #000;
+    border: 0.063rem solid #000;
     padding: 0.635rem 0.938rem;
 }
 .transparent-to-white-btn:hover{

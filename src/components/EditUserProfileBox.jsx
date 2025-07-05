@@ -1,9 +1,10 @@
 import './UserProfileBox.css';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ApiDomain } from "../data/ApiDomain";
 import { Link, useNavigate } from "react-router-dom";
 import { preventDefaultEvent } from '../utils/PreventDefaultEvent';
 import Spinner from './Spinner';
+import ImageCropper from './ImageCropper';
 
 const EditUserProfileBox = ({user, userPicture}) => {
     const navigate = useNavigate();
@@ -11,6 +12,10 @@ const EditUserProfileBox = ({user, userPicture}) => {
     const [newUsername, setNewUsername] = useState(user.username ?? "");
     const [newUserEmail, setNewUserEmail] = useState(user.email ?? "");
     const [newUserPicture, setNewUserPicture] = useState("");
+    const [newUserPictureSrc, setNewUserPictureSrc] = useState("");
+
+    const [showModal, setShowModal] = useState(false);
+    const fileInputRef = useRef(null);
 
     const [isInitialFetchLoading, setIsInitialFetchLoading] = useState(true);
     const [isUpdateLoading, setIsUpdateLoading] = useState(false);
@@ -69,6 +74,29 @@ const EditUserProfileBox = ({user, userPicture}) => {
         }
     }
 
+    const handleImageUpload = (image)=>{
+        setNewUserPicture(image);
+        setShowModal(false)
+
+        if(image.type !== "image/gif"){
+            setShowModal(true);
+        }
+    }
+
+    const clearFileInput = ()=>{
+        fileInputRef.current.value = "";
+    }
+
+    const handleClickOnEditPicture = (event)=>{
+        event.preventDefault();
+
+        const parent = event.target.parentElement;
+
+        const form = parent.nextElementSibling;
+
+        form.querySelector('input[type="file"]').click();
+    }
+
     const loadUserData = ()=>{
         return (
             <article className="user-profile-box w-60-percent px-20 py-20 my-20">
@@ -88,8 +116,9 @@ const EditUserProfileBox = ({user, userPicture}) => {
                 }
 
                 <div className="d-flex flex-row gap-10">
-                    <div className="user-profile-picture w-40-percent">
-                        <img className="w-90-percent img-fluid" src={userPicture} alt={`${user.username}'s picture`}/>
+                    <div className="user-profile-picture w-40-percent position-relative">
+                        <img className="w-90-percent img-fluid" src={(newUserPictureSrc != "") ? newUserPictureSrc : userPicture} alt={`${user.username}'s picture`}/>
+                        <i className="fa-solid fa-pen position-absolute icon-top-right cursor-pointer" to="" onClick={(event)=>handleClickOnEditPicture(event)}></i>
                     </div>
                     <form className="user-profile-information d-flex flex-column gap-10" action="" onSubmit={(event)=>submitForm(event)}>
                         <div className="d-flex flex-column gap-10">
@@ -107,10 +136,14 @@ const EditUserProfileBox = ({user, userPicture}) => {
                             />
                         </div>
                         <div className="d-flex flex-column gap-10">
-                            <h2>Profile Picture: </h2>
-                            <input className="upload-file-input cursor-pointer w-fit-content mt-10 mb-10" 
-                                type="file" accept=".gif, .jpeg, .jpg, .png, .webp"
-                                onChange={(event)=>setNewUserPicture(event.target.files[0])}
+                            <div className="">
+                                <p className="f-size-12">[For profile pictures, in case of gifs, they need to have the same width as height]</p>
+                            </div>
+                            <input className="upload-file-input cursor-pointer w-fit-content mt-10 mb-10 d-none" type="file" 
+                                id="userPicture" 
+                                ref={fileInputRef}
+                                onChange={(event)=>handleImageUpload(event.target.files[0])}
+                                accept=".gif, .jpeg, .jpg, .png, .webp"
                             />
                         </div>
                         <div className="d-flex flex-row gap-10">
@@ -144,6 +177,13 @@ const EditUserProfileBox = ({user, userPicture}) => {
                     < Spinner />
                     :
                     loadUserData()
+            }
+            {
+                showModal
+                ?
+                    <ImageCropper loadedImage={newUserPicture} setCroppedImage={setNewUserPicture} setShowModal={setShowModal} clearFileInput={clearFileInput} setCroppedImageSrc={setNewUserPictureSrc}/>
+                :
+                    null
             }
         </>
     )
