@@ -61,6 +61,12 @@ const EditUserProfileBox = ({user, userPicture}) => {
                 setNewUsername("");
                 setNewUserEmail("");
                 setNewUserPicture("");
+                
+                if(newUserPictureSrc != ""){
+                    URL.revokeObjectURL(newUserPictureSrc);
+                }
+
+                setNewUserPictureSrc("");
                 return;
             }
             
