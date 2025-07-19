@@ -17,6 +17,7 @@ import NotFoundErrorPage from './pages/NotFoundErrorPage';
 import PopularPostsPage from './pages/PopularPostsPage';
 import InteractedPostsPage from './pages/InteractedPostsPage';
 import NewestPostsPage from './pages/NewestPostsPage';
+import VerifyEmailPage from './pages/VerifyEmailPage';
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
           <Route path="/posts/add" element={<CreatePostPage />} />
           <Route path="/posts/details/:postId" element={<PostDetailsPage />} />
         </Route>
+        <Route path="/users/verify/:verificationToken" element={<VerifyEmailPage />} />
         <Route path="*" element={<NotFoundErrorPage />} />
       </>
     )
