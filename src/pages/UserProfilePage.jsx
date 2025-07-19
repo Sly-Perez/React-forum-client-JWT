@@ -13,6 +13,9 @@ const UserProfilePage = () => {
     const [user, setUser] = useState([]);
     const [userInSession, setUserInSession] = useState([]);
     const [userPicture, setUserPicture] = useState(null);
+
+    const [userPictureVersion, setUserPictureVersion] = useState(Date.now());
+
     const [errorsList, setErrorsList] = useState([]);
     
     const token = localStorage.getItem("sessionToken") || "";
@@ -49,7 +52,7 @@ const UserProfilePage = () => {
     }
 
     const readServicePictures = async(id)=>{
-        const apiUrl = `${ApiDomain}/users/${id}/pictures`;
+        const apiUrl = `${ApiDomain}/users/${id}/pictures/${userPictureVersion}`;
         try{
             const response = await fetch(apiUrl, {
                 headers: {

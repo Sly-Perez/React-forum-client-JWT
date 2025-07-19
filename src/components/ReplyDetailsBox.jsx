@@ -9,6 +9,9 @@ const ReplyDetailsBox = ({userInSession, reply, userId, handleRefreshOfComments}
 
     const [user, setUser] = useState([]);
     const [userPicture, setUserPicture] = useState([]);
+
+    const [userPictureVersion, setUserPictureVersion] = useState(Date.now());
+
     const [replyImages, setReplyImages] = useState([]);
     const [addCommentIsShown, setAddCommentIsShown] = useState(false);
 
@@ -86,7 +89,7 @@ const ReplyDetailsBox = ({userInSession, reply, userId, handleRefreshOfComments}
     }
 
     const readServiceUserPicture = async(id)=>{
-        const apiUrl = `${ApiDomain}/users/${id}/pictures`;
+        const apiUrl = `${ApiDomain}/users/${id}/pictures/${userPictureVersion}`;
         try{
             const data = await fetch(apiUrl, {
                 headers: {

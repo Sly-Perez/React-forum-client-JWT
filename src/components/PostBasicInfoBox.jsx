@@ -9,6 +9,8 @@ const PostBasicInfoBox = ({post, userId, userBlankPicture}) => {
     const [user, setUser] = useState([]);
     const [userPicture, setUserPicture] = useState(null);
 
+    const [userPictureVersion, setUserPictureVersion] = useState(Date.now());
+
     const [isLoading, setIsLoading] = useState(true);
 
     const token = localStorage.getItem("sessionToken") || "";
@@ -42,7 +44,7 @@ const PostBasicInfoBox = ({post, userId, userBlankPicture}) => {
     }
 
     const readServicePictures = async(id)=>{
-        const apiUrl = `${ApiDomain}/users/${id}/pictures`;
+        const apiUrl = `${ApiDomain}/users/${id}/pictures/${userPictureVersion}`;
         try{
             const data = await fetch(apiUrl, {
                 headers: {

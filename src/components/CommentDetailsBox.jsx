@@ -10,6 +10,9 @@ const CommentDetailsBox = ({userInSession, comment, userId, handleRefreshOfComme
 
     const [user, setUser] = useState([]);
     const [userPicture, setUserPicture] = useState(null);
+
+    const [userPictureVersion, setUserPictureVersion] = useState(Date.now());
+
     const [commentImages, setCommentImages] = useState([]);
 
     const [isLoading, setIsLoading] = useState(true);
@@ -87,7 +90,7 @@ const CommentDetailsBox = ({userInSession, comment, userId, handleRefreshOfComme
     }
 
     const readServiceUserPicture = async(id)=>{
-        const apiUrl = `${ApiDomain}/users/${id}/pictures`;
+        const apiUrl = `${ApiDomain}/users/${id}/pictures/${userPictureVersion}`;
         try{
             const data = await fetch(apiUrl, {
                 headers: {

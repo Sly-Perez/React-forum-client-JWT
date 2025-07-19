@@ -16,6 +16,8 @@ const PostCompleteInfoBox = ({post, userId, errors}) => {
     const [userInSession, setUserInSession] = useState([]);
     const [userPicture, setUserPicture] = useState(null);
 
+    const [userPictureVersion, setUserPictureVersion] = useState(Date.now());
+
     const [isLoading, setIsLoading] = useState(true);
 
     const [refreshComments, setRefreshComments] = useState(false);
@@ -53,7 +55,7 @@ const PostCompleteInfoBox = ({post, userId, errors}) => {
     }
 
     const readServiceUserPictures = async(id)=>{
-        const apiUrl = `${ApiDomain}/users/${id}/pictures`;
+        const apiUrl = `${ApiDomain}/users/${id}/pictures/${userPictureVersion}`;
         try{
             const data = await fetch(apiUrl, {
                 headers: {

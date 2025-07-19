@@ -12,6 +12,7 @@ const EditUserProfilePage = () => {
     const [user, setUser] = useState([]);
     const [userPicture, setUserPicture] = useState(null);
 
+    const [userPictureVersion, setUserPictureVersion] = useState(Date.now());
 
     const token = localStorage.getItem("sessionToken") || "";
 
@@ -44,7 +45,7 @@ const EditUserProfilePage = () => {
     }
 
     const readServicePictures = async(id)=>{
-        const apiUrl = `${ApiDomain}/users/${id}/pictures`;
+        const apiUrl = `${ApiDomain}/users/${id}/pictures/${userPictureVersion}`;
         try{
             const response = await fetch(apiUrl, {
                 headers: {

@@ -11,6 +11,8 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
     const [user, setUser] = useState([]);
     const [userPicture, setUserPicture] = useState(null);
 
+    const [userPictureVersion, setUserPictureVersion] = useState(Date.now());
+
     const [commentDescription, setCommentDescription] = useState("");
     const [commentPictures, setCommentPictures] = useState([]);
 
@@ -48,7 +50,7 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
     }
 
     const readServiceUserPicture = async(id)=>{
-        const apiUrl = `${ApiDomain}/users/${id}/pictures`;
+        const apiUrl = `${ApiDomain}/users/${id}/pictures/${userPictureVersion}`;
         try{
             const data = await fetch(apiUrl, {
                 headers: {
