@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone');
+#navbar-checkbox{
+    display: none;
+}
 .nav-bar{
     background-color: #fff;
     border-bottom: 1px solid rgba(0, 0, 0, 0.35);
@@ -28,11 +32,73 @@ ul li{
     }
 }
 
+@media (max-width: 53.125rem) {
+
+    .navbar-regular-options{
+        width: 100%;
+        margin-top: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        max-height: 0;
+        overflow: hidden;
+        transition: all ease-in 0.27s;
+    }
+
+    #navbar-checkbox:checked ~ .navbar-container div .navbar-checkbox-icon label::before{
+        content: "close";
+    }
+
+    #navbar-checkbox:checked ~ .navbar-container .navbar-regular-options{
+        max-height: 100vh;
+    }
+
+    .navbar-regular-options li{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-top: 0.625rem;
+        padding: 0.625rem 0;
+        border-top: 0.063rem solid rgb(215, 215, 215);
+    }
+
+
+    .navbar-container{
+        flex-direction: column !important;
+    }
+
+    .navbar-container > :first-child{
+        width: 100%;
+    }
+
+    .navbar-checkbox-icon {
+        cursor: pointer;
+        position: relative;
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .navbar-checkbox-icon label::before{
+        position: absolute;
+        content: "menu";
+        font-family: "Material Icons";
+        font-size: 1.875rem;
+    }
+
+}
+
 .wt-custom-animation{
     background-color: #000;
     animation: wt-custom-animation 0.4s infinite;
 }
+.wt-custom-animation-navbar-checkbox-icon label::before{
+    background-color: #000;
+    animation: wt-custom-animation 0.4s infinite;
+}
 .wt-custom-animation:hover{
+    border: 0.188rem solid transparent;
+}
+.wt-custom-animation-navbar-checkbox-icon:hover label::before{
     border: 0.188rem solid transparent;
 }
 

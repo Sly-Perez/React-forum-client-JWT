@@ -1,3 +1,4 @@
+import './WeekieTalkiePage.css';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import PostsListing from "../components/PostsListing";
 import { ApiDomain } from "../data/ApiDomain";
@@ -89,7 +90,7 @@ const InteractedPostsPage = () => {
             <>
                 <section id="section-1-wt" className="py-20 px-20 min-height-500">
                     <div className="d-flex flex-column align-items-center gap-10">
-                        <div className="post-list-section w-90-percent px-20 py-20 gap-10">
+                        <div className="post-list-section px-20 py-20 gap-10">
                             <div className="create-post-button my-10">
                                 <button className="d-flex flex-row gap-10 pagination-item cursor-pointer px-20 py-10" onClick={()=>navigate("/posts/add")}>
                                     <i className="fa-solid fa-circle-plus d-flex align-items-center"></i>
@@ -97,7 +98,7 @@ const InteractedPostsPage = () => {
                                 </button>
                             </div>
 
-                            <div className="d-flex flex-row justify-content-between align-items-center">
+                            <div className="subtitle-posts-box">
                                 <h1 className="f-size-30">Interacted</h1>
                                 
                                 <div className="d-flex flex-row">

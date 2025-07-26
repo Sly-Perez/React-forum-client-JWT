@@ -105,7 +105,7 @@ const EditUserProfileBox = ({user, userPicture}) => {
 
     const loadUserData = ()=>{
         return (
-            <article className="user-profile-box w-60-percent px-20 py-20 my-20">
+            <article className="user-profile-box px-20 py-20 my-20">
 
                 {
                     errorsList.length > 0
@@ -121,8 +121,8 @@ const EditUserProfileBox = ({user, userPicture}) => {
                     null
                 }
 
-                <div className="d-flex flex-row gap-10">
-                    <div className="user-profile-picture w-40-percent position-relative">
+                <div className="d-flex edit-user-profile-box gap-10">
+                    <div className="edit-user-profile-picture position-relative">
                         <img className="w-90-percent img-fluid" src={(newUserPictureSrc != "") ? newUserPictureSrc : userPicture} alt={`${user.username}'s picture`}/>
                         <i className="fa-solid fa-pen position-absolute icon-top-right cursor-pointer" to="" onClick={(event)=>handleClickOnEditPicture(event)}></i>
                     </div>

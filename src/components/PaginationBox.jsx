@@ -3,12 +3,20 @@ import { Link } from "react-router-dom";
 
 const PaginationBox = ({currentPage, totalPages, changePage}) => {
 
+  const [showResponsivePagination, setShowResponsivePagination] = useState(false);
   const [firstPage, setFirstPage] = useState(1);
   const [lastPage, setLastPage] = useState(totalPages);
 
   useEffect(()=>{
     
     setLastPage(totalPages);
+    handleResizeScreen();
+        
+    window.addEventListener("resize", handleResizeScreen);
+
+    return ()=>{
+      window.removeEventListener("resize", handleResizeScreen);
+    }
     
   }, [currentPage, totalPages, changePage]);
 
@@ -175,6 +183,15 @@ const PaginationBox = ({currentPage, totalPages, changePage}) => {
     )
   }
 
+  const handleResizeScreen = ()=>{
+    if(window.innerWidth <= 810){
+      setShowResponsivePagination(true);
+    }
+    else{
+      setShowResponsivePagination(false);
+    }
+  }
+
   return (
     <>
       <div className={"pagination-items d-flex flex-row align-items-center justify-content-center gap-10 my-20"}>  
@@ -189,7 +206,15 @@ const PaginationBox = ({currentPage, totalPages, changePage}) => {
         }
 
         {
-          generatePages()
+          (showResponsivePagination)
+          ?
+            <Link key={currentPage} className={`WT-anchor pagination-item border-3 box-shadow-sm py-10 px-10`} to="" onClick={()=>changePage(currentPage)}>
+              <span className="px-10">
+                {currentPage}
+              </span>
+            </Link>
+          :
+            generatePages()
         }
         
         {

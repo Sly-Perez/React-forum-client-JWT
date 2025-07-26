@@ -1,3 +1,4 @@
+import './PostCompleteInfoBox.css';
 import { useEffect, useState } from "react";
 
 import PostDetailsBox from "./PostDetailsBox";
@@ -152,7 +153,7 @@ const PostCompleteInfoBox = ({post, userId, errors}) => {
     }
 
     return (
-        <div className={`post-details-box w-60-percent px-20 py-20 my-20 gap-10 ${errors.length > 0 ? "d-flex justify-content-center align-items-center" : ""}`}>
+        <div className={`post-details-box px-20 py-20 my-20 gap-10 ${errors.length > 0 ? "d-flex justify-content-center align-items-center" : ""}`}>
             {
                 errors.length === 0
                 ?

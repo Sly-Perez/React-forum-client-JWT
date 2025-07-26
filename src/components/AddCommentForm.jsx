@@ -169,7 +169,7 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
     }
 
     return (
-        <div className={`post-details-add-comment ${isMainComment ? "post-details-add-comment-main" : ""} ${ (addCommentIsShown === true) ? "" : "d-none"} my-20 mx-15`}>
+        <div className={`post-details-add-comment ${isMainComment ? "post-details-add-comment-main" : ""} ${ (addCommentIsShown === true) ? "" : "d-none"} mt-20 mx-15`}>
                 
                 {
                     errorsList.length > 0
@@ -193,13 +193,13 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
                         ?
                         < Spinner sizeLevel={2} />
                         :
-                        <form className="d-flex flex-row gap-10 align-items-center" action="" onSubmit={(event)=>submitForm(event)}>
+                        <form className="d-flex flex-column gap-10 align-items-center" action="" onSubmit={(event)=>submitForm(event)}>
 
-                            <div className="d-flex flex-row gap-10 align-items-center w-70-percent">
-                                <Link className="add-comment-user-picture" to={`/users/profile/${user.userId}`}>
+                            <div className="d-flex flex-row align-items-center w-100-percent">
+                                <Link className="add-comment-user-picture mx-5" to={`/users/profile/${user.userId}`}>
                                     <img className="img-fluid icon-sized-img circle-like-border" src={userPicture} alt={`${user.username}'s profile picture`} />
                                 </Link>
-                                <div className="w-100-percent">
+                                <div className="w-100-percent mx-5">
                                     <textarea className="w-90-percent resize-none search-bar-input transition-all-ease-in-5ms" 
                                         rows="2" minLength="1" maxLength="300" placeholder="Add a comment..."
                                         value={commentDescription} onChange={(event)=>setCommentDescription(event.target.value)} onKeyUp={()=>handleCommentDescriptionKeyUp()}
@@ -217,10 +217,12 @@ const AddCommentForm = ({isMainComment = false, addCommentIsShown = false, hideA
                                 </div>
                             </div>
 
-                            <Link className="transparent-to-white-btn cancel-comment-button" onClick={(event)=>clearInputs(event)}>
-                                Cancel
-                            </Link>
-                            <button className="green-btn cursor-pointer" type="submit">Comment</button>
+                            <div className="d-flex flex-row justify-content-f-end gap-10 w-100-percent">
+                                <Link className="transparent-to-white-btn cancel-comment-button f-size-14" onClick={(event)=>clearInputs(event)}>
+                                    Cancel
+                                </Link>
+                                <button className="green-btn cursor-pointer f-size-14" type="submit">Comment</button>
+                            </div>
                         </form>
                     }
                 </div>

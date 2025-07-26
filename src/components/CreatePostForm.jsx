@@ -65,6 +65,18 @@ const CreatePostForm = () => {
         }
     }
 
+    const handleClickOnAddImgIcon = (event)=>{
+        event.preventDefault();
+
+        let target = event.target;
+
+        if (event.target.tagName.toLowerCase() === 'span') {
+            target = event.target.parentElement;
+        }
+
+        target.nextElementSibling.click();
+    }
+
     return (
         <>
             {
@@ -101,7 +113,10 @@ const CreatePostForm = () => {
                         onChange={(event)=>setPostDescription(event.target.value)}
                     />
                     <span>Attach Image(s): </span>
-                    <input className="upload-file-input cursor-pointer w-fit-content mt-10 mb-10" type="file" id="pictures" 
+                    <i className="fa-solid fa-images cursor-pointer pagination-item p-4 w-50-percent" onClick={(event)=>handleClickOnAddImgIcon(event)}>
+                        <span className="f-size-12">  Add Image(s)</span>
+                    </i>
+                    <input className="d-none upload-file-input cursor-pointer w-fit-content mt-10 mb-10" type="file" id="pictures" 
                         name="pictures[]" accept=".gif, .jpeg, .jpg, .png, .webp" multiple 
                         onChange={(event)=>setPostPictures(event.target.files)}
                     />

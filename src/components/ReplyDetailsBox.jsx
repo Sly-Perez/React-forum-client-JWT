@@ -144,7 +144,7 @@ const ReplyDetailsBox = ({userInSession, reply, userId, handleRefreshOfComments}
     };
 
     return (
-            <div className="more-comment-displayed d-flex flex-row justify-content-between mb-5">
+            <div className="more-comment-displayed d-flex flex-row justify-content-between gap-10 mb-5">
                 <div className="d-flex flex-row gap-10 py-10">
                     {
                         isLoading
@@ -158,7 +158,7 @@ const ReplyDetailsBox = ({userInSession, reply, userId, handleRefreshOfComments}
                                 </Link>
                             </div>
                             <div className="">
-                                <div className="d-flex flex-row align-items-center gap-10">
+                                <div className="d-flex flex-row align-items-center white-space-no-wrap gap-10">
                                     <p>
                                         <b>
                                             <Link className="f-size-14 black-text" to={`/users/profile/${user.userId}`}>

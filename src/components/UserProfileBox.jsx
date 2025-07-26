@@ -50,7 +50,7 @@ const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, 
 
     const loadUserData = ()=>{
         return (
-            <article className={`user-profile-box d-flex flex-row gap-10 w-60-percent px-20 py-20 my-20 gap-10`}>
+            <article className={`d-flex user-profile-box gap-10 px-20 py-20 my-20 gap-10`}>
                 {
                     (errors.length > 0 && user.length === 0)
                     ? 
@@ -65,8 +65,8 @@ const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, 
                     </div>
                     : 
                     <>
-                        <div className="user-profile-picture w-25-percent">
-                            <img className="w-90-percent img-fluid" src={userPicture} alt={`${user.username}'s picture`}/>
+                        <div className="user-profile-picture">
+                            <img className="img-fluid" src={userPicture} alt={`${user.username}'s picture`}/>
                         </div>
                         <div className="user-profile-information d-flex flex-column gap-10">
                             <div className="d-flex flex-column">

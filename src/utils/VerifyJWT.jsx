@@ -13,7 +13,7 @@ export const VerifyJWT = async(navigate, currentPath) => {
             }
         });
         
-        //if the JWT has not expired and the client is in any other page that is not "/" nor "/signup", they will be redirected to the login page ("/")
+        //if the JWT has expired and the client is in any other page that is not "/" nor "/signup", they will be redirected to the login page ("/")
         if(currentPath != "/" && currentPath != "/signup"){
             if(data.status === 400){
                 navigate(currentPath);

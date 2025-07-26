@@ -158,8 +158,8 @@ const CommentDetailsBox = ({userInSession, comment, userId, handleRefreshOfComme
                                     <img className="img-fluid icon-sized-img circle-like-border" src={userPicture} alt={`${user.username}'s profile picture`} />
                                 </Link>
                             </div>
-                            <div className="w-80-percent">
-                                <div className="d-flex flex-row align-items-center gap-10">
+                            <div className="">
+                                <div className="d-flex flex-row align-items-center white-space-no-wrap gap-10">
                                     <p>
                                         <b>
                                             <Link className="black-text" to={`/users/profile/${user.userId}`}>

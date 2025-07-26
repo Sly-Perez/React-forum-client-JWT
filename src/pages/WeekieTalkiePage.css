@@ -1,0 +1,9 @@
+.post-list-section{
+    width: 90%;
+    transition: all ease-in 0.22s;
+}
+@media (max-width: 53.125rem) {
+    .post-list-section{
+        width: 100%;
+    }
+}

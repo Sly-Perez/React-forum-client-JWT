@@ -129,6 +129,18 @@ const SignUpForm = () => {
         fileInputRef.current.value = "";
     }
 
+    const handleClickOnAddImgIcon = (event)=>{
+        event.preventDefault();
+        
+        let target = event.target;
+
+        if (event.target.tagName.toLowerCase() === 'span') {
+            target = event.target.parentElement;
+        }
+
+        target.nextElementSibling.click();
+    }
+
     return (
         <>
             {
@@ -200,9 +212,12 @@ const SignUpForm = () => {
                             <div className="d-flex flex-column gap-10">
                                 <div className="">
                                     <h2>Profile Picture: </h2>
-                                    <p>(optional)</p>
+                                    <p className="f-size-12">(optional)</p>
                                 </div>
-                                <input className="upload-file-input cursor-pointer w-fit-content mt-10 mb-10" type="file" 
+                                <i className="fa-solid fa-images cursor-pointer pagination-item p-4 w-50-percent" onClick={(event)=>handleClickOnAddImgIcon(event)}>
+                                    <span className="f-size-12">  Add Image</span>
+                                </i>
+                                <input className="d-none upload-file-input cursor-pointer w-fit-content mt-10 mb-10" type="file" 
                                     id="userPicture" 
                                     ref={fileInputRef}
                                     onChange={(event)=>handleImageUpload(event.target.files[0])}

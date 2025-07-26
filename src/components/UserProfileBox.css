@@ -4,4 +4,64 @@
     color: #000;
     box-shadow: 0.120rem 0.120rem 0.600rem rgba(0,0,0,0.2);
     min-height: 15rem;
+    transition: all ease-out 0.23s;
+    width: 60%;
+    flex-direction: row;
+
+    @media (max-width: 53.125rem) {
+        width: 80% !important;
+    }
+
+    @media (max-width: 37.5rem) {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    @media (max-width: 30.063rem) {
+        width: 100% !important;
+    }
+    
+}
+
+.edit-user-profile-box{
+    border-radius: 1rem;
+    color: #000;
+    transition: all ease-out 0.23s;
+    flex-direction: row;
+
+    @media (max-width: 46.25rem) {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+}
+
+.user-profile-picture{
+    width: 25%;
+    transition: all ease-out 0.2s;
+
+    @media (max-width: 81.25rem) {
+        width: 35%;
+    }
+
+    @media (max-width: 68.75rem) {
+        width: 50%;
+    }
+
+    @media (max-width: 30.063rem) {
+        width: 70%;
+    }
+}
+
+.edit-user-profile-picture{
+    width: 40%;
+    transition: all ease-out 0.2s;
+
+    @media (max-width: 81.25rem) {
+        width: 60%;
+    }
+
+    @media (max-width: 68.75rem) {
+        width: 80%;
+    }
 }
