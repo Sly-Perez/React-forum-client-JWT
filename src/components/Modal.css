@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone');
+
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content{
+    background-color: white;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    max-width: 50%;
+    width: 100%;
+    position: relative;
+    z-index: 1001;
+    transition: all ease-in 0.2s;
+
+    @media (max-width: 68.75rem) {
+        max-width: 80%;
+    }
+
+}
+
+.modal-close-icon::before{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    content: "close";
+    font-family: "Material Icons";
+    font-size: 1.875rem;
+    cursor: pointer;
+}

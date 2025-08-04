@@ -1,10 +1,13 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './UserProfileBox.css';
 import { ApiDomain } from '../data/ApiDomain';
 import { useState } from 'react';
 import Spinner from './Spinner';
+import Modal from './Modal';
 
 const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, isDeleteButtonActive = false, userIsAdmin = false}) => {
+
+    const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
     const navigate = useNavigate();
     const token = localStorage.getItem("sessionToken") || "";
@@ -94,7 +97,7 @@ const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, 
                                 {
                                     isDeleteButtonActive
                                     ?
-                                    <button className="white-to-dark-red-btn squared-border cursor-pointer" onClick={()=>deleteProfile(user.userId)}>
+                                    <button className="white-to-dark-red-btn squared-border cursor-pointer" onClick={()=>setShowConfirmDeleteModal(true)}>
                                         Delete
                                     </button>
                                     :
@@ -146,6 +149,23 @@ const UserProfileBox = ({user, userPicture, errors, isEditButtonActive = false, 
                     < Spinner />
                     :
                     loadUserData()
+            }
+
+            {
+                (showConfirmDeleteModal)
+                ?
+                    <>
+                        <Modal isVisible={showConfirmDeleteModal} setIsVisible={setShowConfirmDeleteModal} >
+                            <h2>Confirm deletion</h2>
+                            <p className="my-10">Are you sure you want to delete this account?</p>
+                            <div className="d-flex flex-row gap-10">
+                                <Link className="white-btn squared-border" to="" onClick={()=>setShowConfirmDeleteModal(false)}>Cancel</Link>
+                                <Link className="pagination-item cursor-pointer px-20 py-10" to="" onClick={()=>deleteProfile(user.userId)}>Delete</Link>
+                            </div>
+                        </Modal>
+                    </>
+                :
+                    null
             }
         </>
     )

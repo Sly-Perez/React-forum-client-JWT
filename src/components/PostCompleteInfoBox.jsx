@@ -7,11 +7,15 @@ import AddCommentForm from "./AddCommentForm";
 import CommentsListing from "./CommentsListing";
 import { Link, useNavigate } from "react-router-dom";
 import Spinner from "./Spinner";
+import Modal from './Modal';
+import PostBasicInfoBox from './PostBasicInfoBox';
 
 
 const PostCompleteInfoBox = ({post, userId, errors}) => {
 
     const navigate = useNavigate();
+
+    const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
     const [user, setUser] = useState([]);
     const [userInSession, setUserInSession] = useState([]);
@@ -136,7 +140,7 @@ const PostCompleteInfoBox = ({post, userId, errors}) => {
                     (userInSession.userId === user.userId) || (userInSession.hierarchyLevelId === 1)
                     ?
                     <div className="d-flex flex-row justify-content-f-end mb-5">
-                        <button className="white-to-dark-red-btn squared-border cursor-pointer" onClick={()=>deletePost(post.postId)}>
+                        <button className="white-to-dark-red-btn squared-border cursor-pointer" onClick={()=>setShowConfirmDeleteModal(true)}>
                             Delete
                         </button>
                     </div>
@@ -153,36 +157,55 @@ const PostCompleteInfoBox = ({post, userId, errors}) => {
     }
 
     return (
-        <div className={`post-details-box px-20 py-20 my-20 gap-10 ${errors.length > 0 ? "d-flex justify-content-center align-items-center" : ""}`}>
-            {
-                errors.length === 0
-                ?
-                <>
-                    {
-                        isLoading
-                        ?
-                        < Spinner />
-                        :
-                            (post && user && userInSession && userPicture)
-                            ?
-                            loadPostData()
-                            :
-                            null
-                    }
-                </>
-                :
-                <div className="error-box movie-poster py-20 px-20 text-center">
+        <>
+            <div className={`post-details-box px-20 py-20 my-20 gap-10 ${errors.length > 0 ? "d-flex justify-content-center align-items-center" : ""}`}>
                 {
-                    errors.map((item, index)=>(
-                        <div key={index}>
-                            <p className="mb-10">Whoops! {item}</p>
-                            <Link className="WT-anchor" to="/WeekieTalkie">Go Back to Home</Link>
-                        </div>
-                ))
+                    errors.length === 0
+                    ?
+                    <>
+                        {
+                            isLoading
+                            ?
+                            < Spinner />
+                            :
+                                (post && user && userInSession && userPicture)
+                                ?
+                                loadPostData()
+                                :
+                                null
+                        }
+                    </>
+                    :
+                    <div className="error-box movie-poster py-20 px-20 text-center">
+                    {
+                        errors.map((item, index)=>(
+                            <div key={index}>
+                                <p className="mb-10">Whoops! {item}</p>
+                                <Link className="WT-anchor" to="/WeekieTalkie">Go Back to Home</Link>
+                            </div>
+                    ))
+                    }
+                    </div>
                 }
-                </div>
+            </div>
+            {
+                (showConfirmDeleteModal)
+                ?
+                    <>
+                        <Modal isVisible={showConfirmDeleteModal} setIsVisible={setShowConfirmDeleteModal} >
+                            <h2>Confirm deletion</h2>
+                            <p className="my-10">Are you sure you want to delete this post?</p>
+                            < PostBasicInfoBox post={post} userId={post.userId} />
+                            <div className="d-flex flex-row gap-10">
+                                <Link className="white-btn squared-border" to="" onClick={()=>setShowConfirmDeleteModal(false)}>Cancel</Link>
+                                <Link className="pagination-item cursor-pointer px-20 py-10" to="" onClick={()=>deletePost(post.postId)}>Delete</Link>
+                            </div>
+                        </Modal>
+                    </>
+                :
+                    null
             }
-        </div>
+        </>
     )
 }
 

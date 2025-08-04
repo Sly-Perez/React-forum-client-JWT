@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 
 import Spinner from './Spinner';
 import { ApiDomain } from "../data/ApiDomain";
+import { useNavigate } from "react-router-dom";
 
 const VerifyEmailBox = ({verificationToken}) => {
+
+    const navigate = useNavigate();
 
     const [messagesList, setMessagesList] = useState([]);
     const [errorsList, setErrorsList] = useState([]);
@@ -68,26 +71,36 @@ const VerifyEmailBox = ({verificationToken}) => {
                         {
                             (messagesList.length > 0)
                             ?
-                            <ul className="d-flex flex-column success-box py-20 px-20 m-0">
+                            <>
+                                <ul className="d-flex flex-column success-box py-20 px-20 m-0">
                                 {
                                     messagesList.map((item, index)=>(
                                         <li className="f-size-14" key={index}>{item}</li>
                                     ))
                                 }
-                            </ul>
+                                </ul>
+                                <div className="d-flex flex-row gap-10 pagination-item cursor-pointer text-align-center px-20 py-10" onClick={()=>navigate("/")}>
+                                    <span>Go to Log in</span>
+                                </div>
+                            </>
                             :
                             null
                         }
                         {
                             (errorsList.length > 0)
                             ?
-                            <ul className="d-flex flex-column alert-box py-20 px-20 m-0">
-                                {
-                                    errorsList.map((item, index)=>(
-                                        <li className="f-size-14" key={index}>{item}</li>
-                                    ))
-                                }
-                            </ul>
+                            <>
+                                <ul className="d-flex flex-column alert-box py-20 px-20 m-0">
+                                    {
+                                        errorsList.map((item, index)=>(
+                                            <li className="f-size-14" key={index}>{item}</li>
+                                        ))
+                                    }
+                                </ul>
+                                <div className="d-flex flex-row gap-10 pagination-item cursor-pointer text-align-center px-20 py-10" onClick={()=>navigate("/signup")}>
+                                    <span>Go back to sign up</span>
+                                </div>
+                            </>
                             :
                             null
                         }

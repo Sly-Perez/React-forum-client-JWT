@@ -7,7 +7,7 @@ import Spinner from './Spinner';
 const LogInForm = () => {
     const navigate = useNavigate();
 
-    const [userEmail, setUserEmail] = useState("");
+    const [userEmailOrName, setUserEmailOrName] = useState("");
     const [userPassword, setUserPassword] = useState("");
 
     const [errorsList, setErrorsList] = useState([]);
@@ -29,7 +29,7 @@ const LogInForm = () => {
 
         const apiUrl = `${ApiDomain}/users/login`;
         const JSONBody = JSON.stringify({
-            email: userEmail,
+            emailOrUsername: userEmailOrName,
             password: userPassword
         });
 
@@ -93,8 +93,8 @@ const LogInForm = () => {
                     }
 
                     <div className="d-flex flex-column gap-10">
-                        <h2>Email: </h2>
-                        <input type="email" minLength="1" maxLength="100" className="add-header-input" onChange={(event)=>setUserEmail(event.target.value)}/>
+                        <h2>Email/username: </h2>
+                        <input type="text" minLength="1" maxLength="100" className="add-header-input" onChange={(event)=>setUserEmailOrName(event.target.value)}/>
                     </div>
                     <div className="d-flex flex-column gap-10">
                         <h2>Password: </h2>

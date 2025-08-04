@@ -5,8 +5,11 @@ import { ApiDomain } from "../data/ApiDomain";
 import RepliesListing from "./RepliesListing";
 import CommentReactionsBox from "./CommentReactionsBox";
 import Spinner from "./Spinner";
+import Modal from "./Modal";
 
 const CommentDetailsBox = ({userInSession, comment, userId, handleRefreshOfComments}) => {
+
+    const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
     const [user, setUser] = useState([]);
     const [userPicture, setUserPicture] = useState(null);
@@ -214,13 +217,31 @@ const CommentDetailsBox = ({userInSession, comment, userId, handleRefreshOfComme
                                 (userInSession.userId === user.userId) || (userInSession.hierarchyLevelId === 1)
                                 ?
                                 <div className="">
-                                    <i className="fa-solid fa-trash-can white-to-dark-red-icon" onClick={()=>deleteComment(comment.commentId)}></i>
+                                    <i className="fa-solid fa-trash-can white-to-dark-red-icon" onClick={()=>setShowConfirmDeleteModal(true)}></i>
                                 </div>
                                 :
                                 null
                             }
                         </>
                     }
+
+                    {
+                        (showConfirmDeleteModal)
+                        ?
+                            <>
+                                <Modal isVisible={showConfirmDeleteModal} setIsVisible={setShowConfirmDeleteModal} >
+                                    <h2>Confirm deletion</h2>
+                                    <p className="my-10">Are you sure you want to delete this comment?</p>
+                                    <div className="d-flex flex-row gap-10">
+                                        <Link className="white-btn squared-border" to="" onClick={()=>setShowConfirmDeleteModal(false)}>Cancel</Link>
+                                        <Link className="pagination-item cursor-pointer px-20 py-10" to="" onClick={()=>deleteComment(comment.commentId)}>Delete</Link>
+                                    </div>
+                                </Modal>
+                            </>
+                        :
+                            null
+                    }
+
                 </div>
             </div>
 
