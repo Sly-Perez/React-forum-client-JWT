@@ -18,6 +18,8 @@ import PopularPostsPage from './pages/PopularPostsPage';
 import InteractedPostsPage from './pages/InteractedPostsPage';
 import NewestPostsPage from './pages/NewestPostsPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
+import ChangePasswordPage from './pages/ChangePasswordPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 function App() {
 
@@ -39,6 +41,8 @@ function App() {
           <Route path="/posts/details/:postId" element={<PostDetailsPage />} />
         </Route>
         <Route path="/users/verify/:verificationToken" element={<VerifyEmailPage />} />
+        <Route path="/users/forgotPassword" element={<ForgotPasswordPage />} />
+        <Route path="/users/changePassword/:verificationToken" element={<ChangePasswordPage />} />
         <Route path="*" element={<NotFoundErrorPage />} />
       </>
     )

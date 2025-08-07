@@ -85,7 +85,8 @@ const SignUpForm = () => {
 
         const formData = new FormData();
         formData.append("jsonBody", JSON.stringify({
-            userId: signedUpUserId
+            userId: signedUpUserId,
+            purpose: 'verifyEmail'
         }));
 
         try{

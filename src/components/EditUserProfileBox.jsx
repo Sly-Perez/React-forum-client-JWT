@@ -10,7 +10,6 @@ const EditUserProfileBox = ({user, userPicture}) => {
     const navigate = useNavigate();
     
     const [newUsername, setNewUsername] = useState(user.username ?? "");
-    const [newUserEmail, setNewUserEmail] = useState(user.email ?? "");
     const [newUserPicture, setNewUserPicture] = useState("");
     const [newUserPictureSrc, setNewUserPictureSrc] = useState("");
 
@@ -24,7 +23,6 @@ const EditUserProfileBox = ({user, userPicture}) => {
 
     useEffect(()=>{
         setNewUsername(user.username ?? "");
-        setNewUserEmail(user.email ?? "");
     }, [user]);
 
     
@@ -41,8 +39,7 @@ const EditUserProfileBox = ({user, userPicture}) => {
         const formData = new FormData();
         formData.append("picture", newUserPicture);
         formData.append("jsonBody", JSON.stringify({
-            username: newUsername,
-            email: newUserEmail          
+            username: newUsername
         }));
 
         try{
@@ -59,7 +56,6 @@ const EditUserProfileBox = ({user, userPicture}) => {
             if(data.status === 200){
                 navigate(`/users/profile/${user.userId}`);
                 setNewUsername("");
-                setNewUserEmail("");
                 setNewUserPicture("");
                 
                 if(newUserPictureSrc != ""){
@@ -135,13 +131,6 @@ const EditUserProfileBox = ({user, userPicture}) => {
                             />
                         </div>
                         <div className="d-flex flex-column gap-10">
-                            <h2>Email: </h2>
-                            <input type="email" minLength="1" maxLength="100" 
-                                className="add-header-input" 
-                                value={newUserEmail} onChange={(event)=>setNewUserEmail(event.target.value)}
-                            />
-                        </div>
-                        <div className="d-flex flex-column gap-10">
                             <div className="">
                                 <p className="f-size-12">[For profile pictures, in case of gifs, they need to have the same width as height]</p>
                             </div>
@@ -152,6 +141,9 @@ const EditUserProfileBox = ({user, userPicture}) => {
                                 accept=".gif, .jpeg, .jpg, .png, .webp"
                             />
                         </div>
+                        <Link className="green-btn px-20 py-10" to={`/users/forgotPassword`}>
+                            Change password
+                        </Link>
                         <div className="d-flex flex-row gap-10">
                             <Link className="transparent-to-white-btn squared-border" type="button" to={`/users/profile/${user.userId}`}>
                                 Cancel

@@ -105,6 +105,9 @@ const LogInForm = () => {
                         <Link className="WT-anchor w-fit-content cursor-pointer" to="/signup">
                             Don't have an account yet?
                         </Link>
+                        <Link className="WT-anchor w-fit-content cursor-pointer" to="/users/forgotPassword">
+                            Forgot your password?
+                        </Link>
                     </div>
                 </form>
             }
